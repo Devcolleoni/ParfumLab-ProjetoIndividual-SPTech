@@ -7,26 +7,22 @@
   <title>ParfumLab</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
   <header>
     <nav class="nav-esquerda">
       <ul class="links-navegacao">
-        <li><a href="#">Perfumes</a></li>
-        <li><a href="#">Sobre</a></li>
+        <li><a href="#historia">História</a></li>
+        <li><a href="#perfumes">Perfumes</a></li>
       </ul>
     </nav>
-
     <div class="logotipo">ParfumLab</div>
-
     <nav class="nav-direita">
       <ul class="links-navegacao">
-        <li><a href="#">Sobre Mim</a></li>
+        <li><a href="#sobre-mim">Sobre Mim</a></li>
         <li><a href="#">Login</a></li>
       </ul>
     </nav>
   </header>
-
   <main>
     <section class="hero">
       <div class="hero-overlay"></div>
@@ -37,11 +33,8 @@
         <img src="imgs/bannerEgeo.png" alt="Perfume 4" class="hero-slide">
       </div>
     </section>
-
-    
-    <section class="historia">
+    <section id="historia" class="historia">
       <div class="container">
-
         <div class="header-historia">
           <h2 class="titulo">A História da Perfumaria</h2>
           <p class="subtitulo">
@@ -49,9 +42,7 @@
             através do tempo.
           </p>
         </div>
-
         <div class="timeline">
-
           <div class="item">
             <div class="numero">01</div>
             <div class="conteudo">
@@ -60,7 +51,6 @@
                 oferendas aos deuses e na arte da mumificação.</p>
             </div>
           </div>
-
           <div class="item">
             <div class="numero">02</div>
             <div class="conteudo">
@@ -69,7 +59,6 @@
                 status e refinamento pessoal.</p>
             </div>
           </div>
-
           <div class="item">
             <div class="numero">03</div>
             <div class="conteudo">
@@ -78,23 +67,21 @@
                 sensoriais únicas e memoráveis.</p>
             </div>
           </div>
-
         </div>
       </div>
     </section>
-    <section class="minhas-fragrancias">
+    <section id="perfumes" class="minhas-fragrancias">
       <div class="container">
         <div class="header">
           <h2 class="titulo">Minhas Fragrâncias</h2>
           <p class="subtitulo">Passe o mouse sobre os cards para ver as notas principais</p>
         </div>
-
         <div class="grid-cards">
           <div class="card-flip">
             <div class="card-inner">
               <div class="card-front">
                 <div class="frasco">
-                  <img src="imgs/sauvage-icon.png" alt="Le Male Le Parfum">
+                  <img src="imgs/sauvage-icon.png" alt="">
                 </div>
                 <h3>EUA DE PARFUM</h3>
                 <p class="familia">sauvage Dior</p>
@@ -102,33 +89,40 @@
               <div class="card-back">
                 <h4>Principais Acordes</h4>
                 <div class="accords">
-                  <div class="accord">
-                    <span>fresco especiado</span>
-                    <div class="bar-container"><div class="bar" style="width: 100%;"></div></div>
+                  <div class="accord"><span>fresco especiado</span>
+                    <div class="bar-container">
+                      <div class="bar" style="width: 100%;"></div>
+                    </div>
                   </div>
-                  <div class="accord">
-                    <span>citrico</span>
-                    <div class="bar-container"><div class="bar" style="width: 79%;"></div></div>
+                  <div class="accord"><span>citrico</span>
+                    <div class="bar-container">
+                      <div class="bar" style="width: 79%;"></div>
+                    </div>
                   </div>
-                  <div class="accord">
-                    <span>ambar</span>
-                    <div class="bar-container"><div class="bar" style="width: 71%;"></div></div>
+                  <div class="accord"><span>ambar</span>
+                    <div class="bar-container">
+                      <div class="bar" style="width: 71%;"></div>
+                    </div>
                   </div>
-                  <div class="accord">
-                    <span>Lavanda</span>
-                    <div class="bar-container"><div class="bar" style="width: 60%;"></div></div>
+                  <div class="accord"><span>Lavanda</span>
+                    <div class="bar-container">
+                      <div class="bar" style="width: 60%;"></div>
+                    </div>
                   </div>
-                  <div class="accord">
-                    <span>almíscarado</span>
-                    <div class="bar-container"><div class="bar" style="width: 50%;"></div></div>
+                  <div class="accord"><span>almíscarado</span>
+                    <div class="bar-container">
+                      <div class="bar" style="width: 50%;"></div>
+                    </div>
                   </div>
-                  <div class="accord">
-                    <span>aromatico</span>
-                    <div class="bar-container"><div class="bar" style="width: 50%;"></div></div>
+                  <div class="accord"><span>aromatico</span>
+                    <div class="bar-container">
+                      <div class="bar" style="width: 50%;"></div>
+                    </div>
                   </div>
-                  <div class="accord">
-                    <span>picante suave</span>
-                    <div class="bar-container"><div class="bar" style="width: 50%;"></div></div>
+                  <div class="accord"><span>picante suave</span>
+                    <div class="bar-container">
+                      <div class="bar" style="width: 50%;"></div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -138,7 +132,7 @@
             <div class="card-inner">
               <div class="card-front">
                 <div class="frasco">
-                  <img src="imgs/yvesSaaintIcon.png" alt="Perfume 2">
+                  <img src="imgs/yvesSaaintIcon.png" alt="">
                 </div>
                 <h3>LE PARFUM</h3>
                 <p class="familia">Yves Saint Laurent</p>
@@ -146,29 +140,35 @@
               <div class="card-back">
                 <h4>Principais Acordes</h4>
                 <div class="accords">
-                  <div class="accord">
-                    <span>Aromatico</span>
-                    <div class="bar-container"><div class="bar" style="width: 100%;"></div></div>
+                  <div class="accord"><span>Aromatico</span>
+                    <div class="bar-container">
+                      <div class="bar" style="width: 100%;"></div>
+                    </div>
                   </div>
-                  <div class="accord">
-                    <span>Fresco especiado</span>
-                    <div class="bar-container"><div class="bar" style="width: 95%;"></div></div>
+                  <div class="accord"><span>Fresco especiado</span>
+                    <div class="bar-container">
+                      <div class="bar" style="width: 95%;"></div>
+                    </div>
                   </div>
-                  <div class="accord">
-                    <span>Fresco</span>
-                    <div class="bar-container"><div class="bar" style="width: 75%;"></div></div>
+                  <div class="accord"><span>Fresco</span>
+                    <div class="bar-container">
+                      <div class="bar" style="width: 75%;"></div>
+                    </div>
                   </div>
-                   <div class="accord">
-                    <span>Frutado</span>
-                    <div class="bar-container"><div class="bar" style="width: 55%;"></div></div>
+                  <div class="accord"><span>Frutado</span>
+                    <div class="bar-container">
+                      <div class="bar" style="width: 55%;"></div>
+                    </div>
                   </div>
-                  <div class="accord">
-                    <span>Herbal</span>
-                    <div class="bar-container"><div class="bar" style="width: 57%;"></div></div>
+                  <div class="accord"><span>Herbal</span>
+                    <div class="bar-container">
+                      <div class="bar" style="width: 57%;"></div>
+                    </div>
                   </div>
-                  <div class="accord">
-                    <span>Amadeirado</span>
-                    <div class="bar-container"><div class="bar" style="width: 57%;"></div></div>
+                  <div class="accord"><span>Amadeirado</span>
+                    <div class="bar-container">
+                      <div class="bar" style="width: 57%;"></div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -178,7 +178,7 @@
             <div class="card-inner">
               <div class="card-front">
                 <div class="frasco">
-                  <img src="imgs/egeoIcon.png" alt="Perfume 3">
+                  <img src="imgs/egeoIcon.png" alt="">
                 </div>
                 <h3>Bomb Black</h3>
                 <p class="familia">Oboticario</p>
@@ -186,27 +186,32 @@
               <div class="card-back">
                 <h4>Principais Acordes</h4>
                 <div class="accords">
-                  <div class="accord">
-                    <span>Doce</span>
-                    <div class="bar-container"><div class="bar" style="width: 95%;"></div></div>
+                  <div class="accord"><span>Doce</span>
+                    <div class="bar-container">
+                      <div class="bar" style="width: 95%;"></div>
+                    </div>
                   </div>
-                  <div class="accord">
-                    <span>Caramelo</span>
-                    <div class="bar-container"><div class="bar" style="width: 85%;"></div></div>
+                  <div class="accord"><span>Caramelo</span>
+                    <div class="bar-container">
+                      <div class="bar" style="width: 85%;"></div>
+                    </div>
                   </div>
-                  <div class="accord">
-                    <span>Couro</span>
-                    <div class="bar-container"><div class="bar" style="width: 80%;"></div></div>
+                  <div class="accord"><span>Couro</span>
+                    <div class="bar-container">
+                      <div class="bar" style="width: 80%;"></div>
+                    </div>
                   </div>
-                  <div class="accord">
-                    <span>Baunilha</span>
-                    <div class="bar-container"><div class="bar" style="width: 79%;"></div></div>
+                  <div class="accord"><span>Baunilha</span>
+                    <div class="bar-container">
+                      <div class="bar" style="width: 79%;"></div>
+                    </div>
                   </div>
-                  <div class="accord">
-                    <span>Amadeirado</span>
-                    <div class="bar-container"><div class="bar" style="width: 68%;"></div></div>
+                  <div class="accord"><span>Amadeirado</span>
+                    <div class="bar-container">
+                      <div class="bar" style="width: 68%;"></div>
+                    </div>
                   </div>
-                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -214,48 +219,97 @@
             <div class="card-inner">
               <div class="card-front">
                 <div class="frasco">
-                  <img src="imgs/iconeJpg.png" alt="Perfume 4">
+                  <img src="imgs/iconeJpg.png" alt="">
                 </div>
                 <h3>Le male Lover</h3>
-                <p class="familia">Jean Paul Gautlier</p>
+                <p class="familia">Jean Paul Gaultier</p>
               </div>
               <div class="card-back">
                 <h4>Principais Acordes</h4>
                 <div class="accords">
-                  <div class="accord">
-                    <span>Baunilha</span>
-                    <div class="bar-container"><div class="bar" style="width: 95%;"></div></div>
+                  <div class="accord"><span>Baunilha</span>
+                    <div class="bar-container">
+                      <div class="bar" style="width: 95%;"></div>
+                    </div>
                   </div>
-                  <div class="accord">
-                    <span>Ambar</span>
-                    <div class="bar-container"><div class="bar" style="width: 70%;"></div></div>
+                  <div class="accord"><span>Ambar</span>
+                    <div class="bar-container">
+                      <div class="bar" style="width: 70%;"></div>
+                    </div>
                   </div>
-                  <div class="accord">
-                    <span>fresco especiado</span>
-                    <div class="bar-container"><div class="bar" style="width: 65%;"></div></div>
+                  <div class="accord"><span>fresco especiado</span>
+                    <div class="bar-container">
+                      <div class="bar" style="width: 65%;"></div>
+                    </div>
                   </div>
-                  <div class="accord">
-                    <span>atalcado</span>
-                    <div class="bar-container"><div class="bar" style="width: 64%;"></div></div>
+                  <div class="accord"><span>atalcado</span>
+                    <div class="bar-container">
+                      <div class="bar" style="width: 64%;"></div>
+                    </div>
                   </div>
-                  <div class="accord">
-                    <span>marinho</span>
-                    <div class="bar-container"><div class="bar" style="width: 60%;"></div></div>
+                  <div class="accord"><span>marinho</span>
+                    <div class="bar-container">
+                      <div class="bar" style="width: 60%;"></div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>
-    
+    <section id="sobre-mim" class="sobre-mim">
+      <div class="container">
+        <div class="sobre-content">
+          <div class="foto-container">
+            <img src="imgs/sobremim.jpeg" alt="">
+          </div>
+          <div class="texto-sobre">
+            <h2 class="titulo">Sobre Mim</h2>
+            <p>A escolha por esse tema não foi por acaso — ela vem de algo que sempre fez parte de mim.</p>
+            <p>Desde cedo, o universo da perfumaria me chama atenção. Sempre foi um assunto que me despertou interesse,
+              curiosidade e, principalmente, conexão. É algo que eu naturalmente gosto de conversar, explorar e
+              compartilhar com outras pessoas.<br>
+            <p>Com o tempo, percebi que o perfume vai muito além de um simples aroma. Ele se tornou uma forma de
+              expressão. Uma maneira de mostrar quem eu sou, sem precisar dizer uma palavra.<br>
+              Por isso, esse tema não é apenas um gosto — é algo que me representa. Algo que faz parte da minha rotina,
+              da minha forma de enxergar o mundo e de me expressar através dele.</p>
+            <div class="assinatura"><span>Gustavo Coleoni</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
-</body>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-left">
+          <div class="logotipo-footer">ParfumLab</div>
+          <p>Minha coleção pessoal.<br>Trazendo a minha cultura atraves do olfato.</p>
+        </div>
 
-</html>
-<script>
+        <div class="footer-center">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="#historia">História</a></li>
+            <li><a href="#perfumes">Minhas Fragrâncias</a></li>
+            <li><a href="#sobre-mim">Sobre Mim</a></li>
+          </ul>
+        </div>
+        <div class="footer-right">
+          <h4>Bibliografia</h4>
+          <p>Fragantica, Dior, YvesSaintLauren, O boticario, Jean Paul Gautlier</p>
+          <p class="aluno">Feito por um aluno da SPtech</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>2026 ParfumLab</p>
+        <p class="made-by">Desenvolvido por um aluno da Sptech</p>
+      </div>
+    </div>
+  </footer>
+  <script>
   const slides = document.querySelectorAll('.hero-slide');
   let indiceAtual = 0;
 
@@ -267,14 +321,10 @@
   function proximoSlide() {
     indiceAtual = (indiceAtual + 1) % slides.length;
     mostrarSlide();
-  }
-
-
-  function iniciarCarrossel() {
+  } function iniciarCarrossel() {
     mostrarSlide();
     setInterval(proximoSlide, 4000);
-  }
-
-
-  iniciarCarrossel();
+  } iniciarCarrossel();
 </script>
+</body>
+</html>
