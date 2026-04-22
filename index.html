@@ -19,7 +19,7 @@
     <nav class="nav-direita">
       <ul class="links-navegacao">
         <li><a href="#sobre-mim">Sobre Mim</a></li>
-        <li><a href="#">Login</a></li>
+        <li><a href="login.html">Login</a></li>
       </ul>
     </nav>
   </header>
@@ -267,12 +267,9 @@
           </div>
           <div class="texto-sobre">
             <h2 class="titulo">Sobre Mim</h2>
-            <p>A escolha por esse tema não foi por acaso — ela vem de algo que sempre fez parte de mim.</p>
-            <p>Desde cedo, o universo da perfumaria me chama atenção. Sempre foi um assunto que me despertou interesse,
-              curiosidade e, principalmente, conexão. É algo que eu naturalmente gosto de conversar, explorar e
-              compartilhar com outras pessoas.<br>
-            <p>Com o tempo, percebi que o perfume vai muito além de um simples aroma. Ele se tornou uma forma de
-              expressão. Uma maneira de mostrar quem eu sou, sem precisar dizer uma palavra.<br>
+            <p>A escolha por esse tema não foi por acaso — ela vem de algo que sempre fez parte de mim.
+             Desde cedo, o universo da perfumaria me chama atenção. Sempre foi um assunto que me despertou interesse,
+              curiosidade e, principalmente, conexão. É algo que eu naturalmente gosto de conversar, e compartilhar com outras pessoas.<br>
               Por isso, esse tema não é apenas um gosto — é algo que me representa. Algo que faz parte da minha rotina,
               da minha forma de enxergar o mundo e de me expressar através dele.</p>
             <div class="assinatura"><span>Gustavo Coleoni</span></div>
@@ -286,7 +283,7 @@
       <div class="footer-content">
         <div class="footer-left">
           <div class="logotipo-footer">ParfumLab</div>
-          <p>Minha coleção pessoal.<br>Trazendo a minha cultura atraves do olfato.</p>
+          <p>Minha coleção pessoal.<br>Trazendo a minha cultura atraves da Perfumaria</p>
         </div>
 
         <div class="footer-center">
@@ -300,7 +297,6 @@
         <div class="footer-right">
           <h4>Bibliografia</h4>
           <p>Fragantica, Dior, YvesSaintLauren, O boticario, Jean Paul Gautlier</p>
-          <p class="aluno">Feito por um aluno da SPtech</p>
         </div>
       </div>
       <div class="footer-bottom">
@@ -310,7 +306,7 @@
     </div>
   </footer>
   <script>
-  const slides = document.querySelectorAll('.hero-slide');
+  let slides = document.querySelectorAll('.hero-slide');/* Cria uma lista nodeList com todos os elementos htlml que tem a classe hero*/
   let indiceAtual = 0;
 
   function mostrarSlide() {
@@ -319,7 +315,7 @@
   }
 
   function proximoSlide() {
-    indiceAtual = (indiceAtual + 1) % slides.length;
+    indiceAtual = (indiceAtual + 1) % slides.length; /* % o porcentagem vai criar um efeito infinito quando chega no 3 o resto fica 0 ai retorna*/
     mostrarSlide();
   } function iniciarCarrossel() {
     mostrarSlide();

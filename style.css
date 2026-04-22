@@ -57,7 +57,6 @@ header {
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 2px;
-    transition: all 0.3s;
     position: relative;
 }
 
@@ -66,7 +65,7 @@ header {
 }
 
 .links-navegacao a::after {
-    content: "";
+    content: ""; /*Isso é um pseudo css, algo que nao existe mas ao ativar a funcao ele cria*/
     position: absolute;
     left: 0;
     bottom: -6px;
@@ -84,12 +83,12 @@ header {
 .hero {
   height: 100vh;
   position: relative;
-  overflow: hidden;
+  overflow: hidden; /*Garante que não vai vazar a imagem*/
 }
 
 .hero-overlay {
   position: absolute;
-  inset: 0;
+  inset: 0; /*Vai funcionar como um atalho, para eu nao declarar, cobre ofundo inteiro*/
   background: rgba(0, 0, 0, 0.376);
   z-index: 3;
 }
@@ -100,43 +99,25 @@ header {
   width: 100%;
   height: 100%;
   top: 0;
-  left: 0;
+  left: 0; /*Vai cuidadar de todos os slides, deixando proporcinal ao elemneto pai*/
 }
 
 .hero-slide {
   position: absolute;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /*Faz se comportar e nao esticar a imagem*/
   opacity: 0;
   transition: opacity 1.5s ease-in-out;
 }
 
 .hero-slide.ativo {
   opacity: 1;
-}
+} /*Quando a classe ativo foi acionada a opacidade sobe para 1, faz a imagem aparecer de forma suave*/
 
-
-.hero-conteudo {
-  position: relative;
-  z-index: 4;
-  text-align: center;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 0 20px;
-}
-  
   .logotipo {
-    font-size: 26px;
+    font-size: 20px;
   }
-  
-  .hero-conteudo h1 {
-    font-size: 52px;
-  }
-
 
 /*Segunda Pagina*/
 
@@ -146,17 +127,6 @@ header {
   color: #fff;
   position: relative;
   overflow: hidden;
-}
-
-.historia::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle at center, rgba(255, 240, 220, 0.04) 0%, transparent 70%);
-  pointer-events: none;
 }
 
 .container {
@@ -215,8 +185,8 @@ header {
 }
 
 .item:last-child {
-  margin-bottom: 0;
-}/*Elimina o espaço desncessario no elemento filho no css*/
+  margin-bottom: -100px;
+}/*aplica somente se o elemneto for o ultimo da pagina o elemento filho */
 
 /*Secao numero*/
 .numero {
