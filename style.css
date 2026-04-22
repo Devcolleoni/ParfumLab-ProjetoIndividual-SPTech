@@ -194,7 +194,7 @@ header {
   font-size: 72px;
   font-weight: 700;
   line-height: 1;
-  color: rgba(166, 123, 91, 0.15); 
+  color: rgba(255, 111, 0, 0.15); 
   min-width: 80px;
   text-align: right;
   transition: all 0.4s ease;
@@ -400,6 +400,54 @@ header {
   height: 100%;
   background: linear-gradient(to right, #a67b5b, #f5e8d3);
 }
+
+.botao-card{
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  
+}
+
+
+.botao-card button {
+    font-family: 'Playfair Display', serif;
+  background-color: gold;  
+  border-radius: 50px;
+  width: 150px;            
+  height: 30px;
+  color: black;
+  border: none;            
+  cursor: pointer;         
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+}
+
+.botao-card a {
+
+
+font-family: 'Playfair Display', serif;
+  background-color: gold;  
+  border-radius: 50px;
+  width: 150px;            
+  height: 30px;
+  color: black;
+  border: none;            
+  cursor: pointer;         
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-decoration: none;
+
+
+}
+
+
 
 
 .sobre-mim {
