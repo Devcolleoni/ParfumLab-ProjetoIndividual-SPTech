@@ -15,11 +15,13 @@
   <div class="caixa-formulario">
     <h2 class="titulo-formulario">Login</h2>
 
-    <form>
-      <input id="email" class="input-formulario" type="email" placeholder="Email" required>
-      <input id="senha" class="input-formulario" type="password" placeholder="Senha" required>
-      <button onclick="logar()" class="botao-formulario">Entrar</button>
+    <form onsubmit="logar(); return false;">
+      <input id="email" class="input-formulario" type="text" placeholder="Email">
+      <input id="senha" class="input-formulario" type="password" placeholder="Senha">
+      <button class="botao-formulario">Entrar</button>
     </form>
+
+    <p id="mensagem" class="texto-formulario"></p>
 
     <p class="texto-formulario">
       Não tem conta?
@@ -29,14 +31,40 @@
 
 </div>
 
-</body>
-</html>
 <script>
-
   function logar() {
 
-    
-    
-  }
+    let user = email.value;
+    let senhaDigitada = senha.value;
 
+    if (user == "" || senhaDigitada == "") {
+      mensagem.innerHTML = "Preencha todos os campos!";
+      mensagem.style.color = "red";
+      return;
+    }
+
+    if (!user.includes("@") || !user.includes(".com")) {
+      mensagem.innerHTML = "Digite um e-mail válido!";
+      mensagem.style.color = "red";
+      return;
+    }
+
+
+    if (user == "teste@gmail.com" && senhaDigitada == "123456") {
+
+      mensagem.innerHTML = "Login realizado com sucesso!";
+      mensagem.style.color = "green";
+
+      alert("Bem-vindo " + user);
+
+    
+
+    } else {
+      mensagem.innerHTML = "Usuário ou senha inválidos!";
+      mensagem.style.color = "red";
+    }
+  }
 </script>
+
+</body>
+</html>

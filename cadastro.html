@@ -5,6 +5,7 @@
   <title>Cadastro</title>
   <link rel="stylesheet" href="cadastro.css">
 </head>
+
 <body>
 
 <div class="pagina-auth">
@@ -14,13 +15,16 @@
   <div class="caixa-formulario">
     <h2 class="titulo-formulario">Criar Conta</h2>
 
-    <form>
-      <input class="input-formulario" type="text" placeholder="Nome" required>
-      <input class="input-formulario" type="email" placeholder="Email" required>
-      <input class="input-formulario" type="password" placeholder="Senha" required>
-      <input class="input-formulario" type="password" placeholder="Confirmar Senha" required>
+    <form onsubmit="cadastrar(); return false;">
+      <input id="ipt_nome" class="input-formulario" type="text" placeholder="Nome">
+      <input id="ipt_email" class="input-formulario" type="text" placeholder="Email">
+      <input id="ipt_senha" class="input-formulario" type="password" placeholder="Senha">
+      <input id="ipt_confirmar" class="input-formulario" type="password" placeholder="Confirmar Senha">
+      
       <button class="botao-formulario">Cadastrar</button>
     </form>
+
+    <p id="mensagem" class="texto-formulario"></p>
 
     <p class="texto-formulario">
       Já tem conta?
@@ -29,6 +33,39 @@
   </div>
 
 </div>
+
+<script>
+  function cadastrar() {
+
+    let nome = ipt_nome.value;
+    let email = ipt_email.value;
+    let senha = ipt_senha.value;
+    let confirmar = ipt_confirmar.value;
+
+    if (nome == "" || email == "" || senha == "" || confirmar == "") {
+      mensagem.innerHTML = "Preencha todos os campos!";
+      mensagem.style.color = "red";
+      return;
+    }
+
+    if (!email.includes("@") || !email.includes(".com")) {
+      mensagem.innerHTML = "Digite um e-mail válido!";
+      mensagem.style.color = "red";
+      return;
+    }
+
+    if (senha != confirmar) {
+      mensagem.innerHTML = "As senhas não coincidem!";
+      mensagem.style.color = "red";
+      return;
+    }
+
+    mensagem.innerHTML = "Cadastro realizado com sucesso!";
+    mensagem.style.color = "green";
+
+    alert("Bem-vindo " + nome);
+  }
+</script>
 
 </body>
 </html>
