@@ -194,7 +194,7 @@ header {
   font-size: 72px;
   font-weight: 700;
   line-height: 1;
-  color: rgba(255, 111, 0, 0.15); 
+  color: rgba(255, 122, 21, 0.947); 
   min-width: 80px;
   text-align: right;
   transition: all 0.4s ease;
@@ -202,7 +202,7 @@ header {
 
 /*Efeito ao passar o mouse em cima dos numero da classe ittem */
 .item:hover .numero {
-  color: rgba(166, 123, 91, 0.35);
+  color: rgba(255, 255, 255, 0.81);
   transform: scale(1.05);
 }
 
@@ -236,7 +236,7 @@ header {
   line-height: 1.85;
   opacity: 0.82;
   letter-spacing: 0.8px;
-  color: #ddd;
+  color: #ffffff;
 }
 
 
