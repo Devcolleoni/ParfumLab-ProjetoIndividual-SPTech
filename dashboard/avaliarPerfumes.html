@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliar Fragrâncias - Parfum Lab</title>
+    <link rel="stylesheet" href="centro.css">
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="logo-container">
+            <div class="logotipo">PARFUM LAB</div>
+        </div>
+
+        <div class="saudacao">
+            Olá, <strong>Gustavo</strong>!
+        </div>
+
+        <div class="menu">
+            <a href="perfumes..html">Perfumes</a>
+            <a href="avaliarPerfumes.html" class="ativo">Avaliar Fragrância</a>
+            <a href="verAvaliacao.html">Ver Avaliações</a>
+            <a href="dashboard.html">Dashboard</a>
+        </div>
+
+        <button onclick="sair()" class="sair">Sair</button>
+    </div>
+
+
+    <div class="conteudo-central">
+        <h1>Avaliar Fragrâncias</h1>
+        <p class="descricao">Clique em um perfume para avaliá-lo</p>
+
+        <div class="grid-perfumes-avaliar">
+
+            <div class="card-avaliar" data-id="1" data-nome="Sauvage">
+                <img src="../imgs/sauvage-icon.png" alt="Sauvage">
+                <h3>Sauvage</h3>
+                <p class="familia">Cítrico • Âmbar • Intenso</p>
+            </div>
+
+            <div class="card-avaliar" data-id="2" data-nome="Yves Saint Laurent">
+                <img src="../imgs/yvesSaaintIcon.png" alt="Yves Saint Laurent">
+                <h3>Yves Saint Laurent</h3>
+                <p class="familia">Floral • Fresco • Elegante</p>
+            </div>
+
+            <div class="card-avaliar" data-id="3" data-nome="Jean Paul Gaultier Le Male">
+                <img src="../imgs/iconeJpg.png" alt="Jean Paul Gaultier">
+                <h3>Jean Paul Gaultier Le Male</h3>
+                <p class="familia">Baunilha • Marinho • Fresco</p>
+            </div>
+
+            <div class="card-avaliar" data-id="4" data-nome="Egeo">
+                <img src="../imgs/egeoIcon.png" alt="Egeo">
+                <h3>Egeo</h3>
+                <p class="familia">Caramelo • Doce • Amadeirado</p>
+            </div>
+
+        </div>
+
+
+        <div class="form-avaliacao" id="formAvaliacao" style="display: none;">
+            <h2>Avaliar: <span id="nomePerfume"></span></h2>
+
+            <div class="estrelas" id="estrelas"></div>
+
+            <p class="nota-atual">Nota: <span id="nota">0</span>/5</p>
+
+            <textarea id="comentario" placeholder="Escreva seu comentário sobre o perfume..."></textarea>
+
+            <div class="botoes-form">
+                <button id="btnCancelar">Cancelar</button>
+                <button id="btnEnviar">Enviar Avaliação</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+
+let nota = 0;
+
+document.querySelectorAll('.card-avaliar').forEach(card => {
+  card.onclick = function () {
+    document.querySelector('#formAvaliacao').style.display = 'block';
+    document.querySelector('#nomePerfume').textContent = card.dataset.nome;
+
+    nota = 0;
+    atualizar();
+  };
+});
+
+
+function atualizar() {
+  let estrelas = '';
+
+  for (let i = 1; i <= 5; i++) {
+    if (i <= nota) {
+      estrelas += `<span onclick="clicar(${i})" style="color:#f5e8d3;font-size:40px;cursor:pointer">★</span>`;
+    } else {
+      estrelas += `<span onclick="clicar(${i})" style="color:#555;font-size:40px;cursor:pointer">★</span>`;
+    }
+  }
+
+  document.querySelector('#estrelas').innerHTML = estrelas;
+  document.querySelector('#nota').textContent = nota;
+}
+
+
+function clicar(valor) {
+  nota = valor;
+  atualizar();
+}
+
+
+document.querySelector('#btnCancelar').onclick = function () {
+  document.querySelector('#formAvaliacao').style.display = 'none';
+};
+
+
+document.querySelector('#btnEnviar').onclick = function () {
+  if (nota === 0) {
+    alert("Escolha uma nota!");
+    return;
+  }
+
+  alert("Avaliação enviada!");
+  document.querySelector('#formAvaliacao').style.display = 'none';
+};
+
+function sair() {
+  
+  window.location.href = "/login.html";
+}
+</script>

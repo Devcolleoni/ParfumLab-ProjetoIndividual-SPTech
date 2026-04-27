@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap');
+
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
+.sidebar {
+    width: 280px;
+    height: 100vh;
+    background-color: #000;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 40px 0;
+}
+
+.logo-container { text-align: center; margin-bottom: 50px; padding: 0 20px; }
+.logotipo {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: #f5e8d3;
+    letter-spacing: 4px;
+}
+.logo-subtitulo {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: #a67b5b;
+    letter-spacing: 2.5px;
+    margin-top: 4px;
+    text-transform: uppercase;
+}
+.saudacao {
+    padding: 0 32px;
+    margin-bottom: 45px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15.5px;
+    color: #ddd;
+}
+.menu a {
+    display: block;
+    padding: 16px 32px;
+    color: #ccc;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    letter-spacing: 1px;
+    transition: all 0.4s ease;
+}
+.menu a:hover {
+    color: #f5e8d3;
+    background-color: rgba(166, 123, 91, 0.1);
+    padding-left: 42px;
+}
+.menu a.ativo {
+    color: #f5e8d3;
+    background-color: rgba(166, 123, 91, 0.15);
+    border-left: 3px solid #a67b5b;
+}
+.sair {
+    margin: 30px 28px 20px;
+    padding: 14px 24px;
+    background: transparent;
+    color: #a67b5b;
+    border: 1.5px solid #a67b5b;
+    border-radius: 50px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14.5px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+.sair:hover {
+    background-color: #a67b5b;
+    color: #000;
+}
+
+
+.conteudo-central{
+    margin-left: 280px;
+    min-height: 100vh;
+    padding: 40px 50px;
+    background-color: #0a0a0a;
+}
+
+.conteudo-central h1 {
+    font-family: 'Playfair Display', serif;
+    color: #f5e8d3;
+    font-size: 42px;
+    margin-bottom: 8px;
+}
+
+.descricao {
+    color: #aaa;
+    font-size: 16.5px;
+    margin-bottom: 50px;
+}
+
+
+.graficos-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.grafico-box {
+    background-color: #111;
+    padding: 30px;
+    border-radius: 20px;
+    height: 420px;
+}
+
+.grafico-box h3 {
+    color: #f5e8d3;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 20px;
+}
+

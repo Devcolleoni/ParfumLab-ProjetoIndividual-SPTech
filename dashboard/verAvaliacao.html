@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ver Avaliações</title>
+  <link rel="stylesheet" href="centro.css">
+
+</head>
+
+<body>
+
+  <div class="sidebar">
+    <div class="logo-container">
+      <div class="logotipo">PARFUM LAB</div>
+      <div class="logo-subtitulo">Avaliações</div>
+    </div>
+
+    <div class="saudacao">
+      Olá, <strong>Gustavo</strong>!
+    </div>
+
+    <div class="menu">
+      <a href="perfumes..html">Perfumes</a>
+      <a href="avaliarPerfumes.html">Avaliar Fragrância</a>
+      <a href="verAvaliacao.html" class="ativo">Ver Avaliações</a>
+      <a href="dashboard.html">Dashboard</a>
+    </div>
+
+    <button onclick="sair()" class="sair">Sair</button>
+  </div>
+
+
+  <div class="conteudo-central">
+    <h1>Todas as Avaliações</h1>
+    <p class="descricao">Veja o que os usuários acharam dos perfumes</p>
+
+
+    <div class="filtro">
+      <button class="filtro-btn ativo" onclick="filtrarTodas()">Todas</button>
+      <button class="filtro-btn" onclick="filtrarPorPerfume('Sauvage')">Sauvage</button>
+      <button class="filtro-btn" onclick="filtrarPorPerfume('Yves Saint Laurent')">YSL</button>
+      <button class="filtro-btn" onclick="filtrarPorPerfume('Egeo')">Egeo</button>
+      <button class="filtro-btn" onclick="filtrarPorPerfume('Jean')">JeanPaulGautlier Lover</button>
+    </div>
+
+    <div class="lista-avaliacoes" id="listaAvaliacoes">
+    </div>
+  </div>
+</body>
+</html>
+ <script>
+
+    let avaliacoesMock = [
+      {
+        id: 1,
+        perfume: "Sauvage",
+        nota: 5,
+        comentario: "Perfume incrível! Fixação ótima e cheiro muito marcante. Uso todos os dias.",
+        data: "27/04/2026",
+        usuario: "Gustavo"
+      },
+      {
+        id: 2,
+        perfume: "Yves Saint Laurent",
+        nota: 4,
+        comentario: "Muito elegante e fresco. Ideal para o dia a dia no trabalho.",
+        data: "26/04/2026",
+        usuario: "Gabriel"
+      },
+      {
+        id: 3,
+        perfume: "Jean Paul Gaultier Le Male",
+        nota: 5,
+        comentario: "Clássico absoluto. O cheiro de baunilha é viciante!",
+        data: "25/04/2026",
+        usuario: "Colleoni"
+      },
+      {
+        id: 4,
+        perfume: "Egeo",
+        nota: 3,
+        comentario: "Doce demais pro meu gosto, mas a projeção é boa.",
+        data: "24/04/2026",
+        usuario: "Samuel"
+      },
+      {
+        id: 5,
+        perfume: "Sauvage",
+        nota: 4,
+        comentario: "Bom, mas achei um pouco forte no começo.",
+        data: "23/04/2026",
+        usuario: "Eduardo"
+      }
+    ];
+
+    function criarEstrelas(nota) {
+      let estrelas = '';
+      for (let i = 1; i <= 5; i++) {
+        if (i <= nota) {
+          estrelas += `<span style="color: #f5e8d3;">★</span>`;
+        } else {
+          estrelas += `<span style="color: #555;">★</span>`;
+        }
+      }
+      return estrelas;
+    }
+
+
+    function renderizarAvaliacoes(avaliacoes) {
+      const container = document.getElementById('listaAvaliacoes');
+      container.innerHTML = '';
+
+      avaliacoes.forEach(av => {
+        const card = document.createElement('div');
+        card.className = 'card-avaliacao';
+        card.innerHTML = `
+          <div class="header-avaliacao">
+            <h3>${av.perfume}</h3>
+            <div class="estrelas">${criarEstrelas(av.nota)}</div>
+          </div>
+          <p class="comentario">"${av.comentario}"</p>
+          <div class="footer-avaliacao">
+            <span>Por: <strong>${av.usuario}</strong></span>
+            <span>${av.data}</span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function filtrarTodas() {
+      renderizarAvaliacoes(avaliacoesMock);
+      atualizarFiltrosAtivos();
+    }
+
+    function filtrarPorPerfume(nome) {
+      const filtradas = avaliacoesMock.filter(av => av.perfume.includes(nome));
+      renderizarAvaliacoes(filtradas);
+      atualizarFiltrosAtivos();
+    }
+
+    function atualizarFiltrosAtivos() {
+      document.querySelectorAll('.filtro-btn').forEach(btn => btn.classList.remove('ativo'));
+    }
+
+    window.onload = function () {
+      renderizarAvaliacoes(avaliacoesMock);
+    };
+    function sair() {
+      window.location.href = "../login.html";
+    }
+  </script>

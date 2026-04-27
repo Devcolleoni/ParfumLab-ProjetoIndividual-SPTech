@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfumes - Parfum Lab</title>
+  <link rel="stylesheet" href="centro.css">
+  <link rel="icon" href="../imgs/sauvage-icon.png">
+
+</head>
+<body>
+
+  <div class="sidebar">
+    <div class="logo-container">
+      <div class="logotipo">PARFUM LAB</div>
+    </div>
+
+    <div class="saudacao">
+      Olá, <strong>Gustavo</strong>!
+    </div>
+
+    <div class="menu">
+      <a href="#" class="ativo">Perfumes</a>
+      <a href="avaliarPerfumes.html">Avaliar Fragrância</a>
+      <a href="verAvaliacao.html">Ver Avaliações</a>
+      <a href="dashboard.html">Dashboard</a>
+    </div>
+
+    <button onclick="sair()" class="sair">Sair</button>
+  </div>
+
+
+  <div class="conteudo-central">
+    <h1>Perfumes</h1>
+    <h2>Qual perfume você mais gostou?</h2>
+    <p class="descricao">Escolha apenas um perfume como seu favorito:</p>
+
+    <div class="grid-perfumes" id="gridPerfumes">
+      
+      <div class="card-perfume" data-id="1">
+        <img src="../imgs/sauvage-icon.png" alt="Sauvage">
+        <h3>Sauvage</h3>
+        <p class="familia">Cítrico • Âmbar • Intenso</p>
+        <button class="btn-escolher">Escolher como Favorito</button>
+      </div>
+
+      <div class="card-perfume" data-id="2">
+        <img src="../imgs/yvesSaaintIcon.png" alt="Yves Saint Laurent">
+        <h3>Yves Saint Laurent</h3>
+        <p class="familia">Floral • Fresco • Elegante</p>
+        <button class="btn-escolher">Escolher como Favorito</button>
+      </div>
+
+      <div class="card-perfume" data-id="3">
+        <img src="../imgs/iconeJpg.png" alt="Jean Paul Gaultier">
+        <h3>Jean Paul Gaultier Le Male</h3>
+        <p class="familia">Baunilha • Marinho • Fresco</p>
+        <button class="btn-escolher">Escolher como Favorito</button>
+      </div>
+
+      <div class="card-perfume" data-id="4">
+        <img src="../imgs/egeoIcon.png" alt="Egeo">
+        <h3>Egeo</h3>
+        <p class="familia">Caramelo • Doce • Amadeirado</p>
+        <button class="btn-escolher">Escolher como Favorito</button>
+      </div>
+
+    </div>
+
+  
+    <div class="enviar-container">
+      <button id="btnEnviar" class="btn-enviar" disabled>
+        Enviar Favorito
+      </button>
+    </div>
+
+  
+    <div class="resumo-box" id="resumoBox" style="display: none;">
+      <h3> Otima Escolha </h3>
+      <div class="resumo-info">
+        <p><strong>ID:</strong> <span id="resumoId"></span></p>
+        <p><strong>Nome:</strong> <span id="resumoNome">Gustavo</span></p>
+        <p><strong>Perfume Preferido:</strong> <span id="resumoPerfume"></span></p>
+      </div>
+      <p class="mensagem-sucesso">Obrigado pela sua avaliação! </p>
+    </div>
+  </div>
+</body>
+</html>
+<script>
+    const cards = document.querySelectorAll('.card-perfume');
+    const btnEnviar = document.getElementById('btnEnviar');
+    const resumoBox = document.getElementById('resumoBox');
+    let selecionado = null;
+
+   
+    cards.forEach(card => {
+      const btn = card.querySelector('.btn-escolher');
+
+      btn.addEventListener('click', () => {
+        const perfumeId = card.dataset.id;
+        const perfumeNome = card.querySelector('h3').textContent;
+
+        
+        if (selecionado && selecionado !== card) {
+          selecionado.classList.remove('selecionado');
+          selecionado.querySelector('.btn-escolher').textContent = 'Escolher como Favorito';
+        }
+
+      
+        if (selecionado === card) {
+          card.classList.remove('selecionado');
+          btn.textContent = 'Escolher como Favorito';
+          selecionado = null;
+          btnEnviar.disabled = true;
+          return;
+        }
+
+     
+        card.classList.add('selecionado');
+        btn.textContent = 'Favorito Selecionado';
+        selecionado = card;
+
+        btnEnviar.disabled = false;
+      });
+    });
+
+    btnEnviar.addEventListener('click', () => {
+      if (!selecionado) return;
+
+      const perfumeId = selecionado.dataset.id;
+      const perfumeNome = selecionado.querySelector('h3').textContent;
+
+      
+      document.getElementById('resumoId').textContent = perfumeId;
+      document.getElementById('resumoPerfume').textContent = perfumeNome;
+      resumoBox.style.display = 'block';
+    
+      btnEnviar.disabled = true;
+      btnEnviar.textContent = "Enviado ";
+    });
+    function sair() {
+      window.location.href = "../login.html";
+    }
+  </script>
