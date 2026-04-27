@@ -68,6 +68,7 @@
     transition: all 0.4s ease;
 }
 
+/*Ao passar o mouse cria um efeito*/
 .menu a:hover {
     color: #f5e8d3;
     background-color: rgba(166, 123, 91, 0.1);
@@ -191,6 +192,7 @@
     margin-top: 10px;
 }
 
+/*Botao Escolher - usa elemento css para criar um efeito*/
 .btn-escolher:hover {
     background-color: #f5e8d3;
     transform: scale(1.05);
@@ -371,6 +373,8 @@
     margin: 15px 0 25px 0;
     color: #ddd;
 }
+
+/*# Na Pagina utiliza um ID ao inves de uma class*/
 
 #comentario {
     width: 100%;
