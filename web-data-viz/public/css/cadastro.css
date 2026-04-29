@@ -7,7 +7,7 @@
 
 .pagina-auth {
   height: 100vh;
-  background: url('imgs/bannerLogin.png') no-repeat center/cover;
+  background: url('../../../imgs/bannerLogin.png') no-repeat center/cover;
   display: flex;
   justify-content: center;
   align-items: center;

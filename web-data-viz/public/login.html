@@ -1,159 +1,94 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>AquaTech | Login</title>
-
-    <script src="./js/sessao.js"></script>
-
-    <link rel="stylesheet" href="./css/estilo.css">
-    <link rel="icon" href="./assets/icon/favicon2.ico">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+  <meta charset="UTF-8">
+  <title>Login</title>
+  
+  <link rel="stylesheet" href="css/cadastro.css">
+  <link rel="icon" href="imgs/bannerLogin.png">
 </head>
-
 <body>
 
-    <!--Header-->
+<div class="pagina-auth">
 
-    <div class="header">
-        <div class="container">
-            <h1 class="titulo">AquaTech</h1>
-            <ul class="navbar">
-                <li>
-                    <a href="index.html">Inicial</a>
-                </li>
-                <li>
-                    <a href="simulador.html">Simulador</a>
-                </li>
-                <li>|</li>
-                <li class="agora">
-                    <a href="#">Login</a>
-                </li>
-                <li>
-                    <a href="cadastro.html">Cadastro</a>
-                </li>
-            </ul>
-        </div>
-    </div>
+  <div class="fundo-escuro"></div>
 
+  <div class="caixa-formulario">
+    <h2 class="titulo-formulario">Login</h2>
 
-    <div class="login">
-        <div class="alerta_erro">
-            <div class="card_erro" id="cardErro">
-                <span id="mensagem_erro"></span>
-            </div>
-        </div>
-        <div class="container">
-            <div class="card card-login">
-                <h2>Olá de volta!</h2>
-                <div class="formulario">
-                    <div class="campo">
-                        <span>E-mail:</span>
-                        <input id="email_input" type="text" placeholder="Login">
-                    </div>
-                    <div class="campo">
-                        <span>Senha:</span>
-                        <input id="senha_input" type="password" placeholder="******">
-                    </div>
-                    <button class="botao" onclick="entrar()">Entrar</button>
-                </div>
+    <form onsubmit="logar(); return false;">
+      <input id="email" class="input-formulario" type="text" placeholder="Email">
+      <input id="senha" class="input-formulario" type="password" placeholder="Senha">
+      <button class="botao-formulario">Entrar</button>
+    </form>
 
-                <div id="div_aguardar" class="loading-div">
-                    <img src="./assets/circle-loading.gif" id="loading-gif">
-                </div>
+    <p id="mensagem" class="texto-formulario"></p>
 
-                <div id="div_erros_login"></div>
-            </div>
-        </div>
-    </div>
+    <p class="texto-formulario">
+      Não tem conta?
+      <a class="link-formulario" href="cadastro.html">Cadastre-se</a>
+    </p>
+  </div>
 
-    <!--footer inicio-->
-    <div class="footer">
-        <div class="container">
-            <h4>Feito com amor por aluno &hearts; SPTech &copy; 2023</h4>
-            <span class="version">v1.0.0</span>
-        </div>
-    </div>
-    <!--footer fim-->
-
+</div>
 </body>
-
 </html>
-
 <script>
+function logar() {
 
+  let user = email.value;
+  let senhaDigitada = senha.value;
 
-    function entrar() {
-        aguardar();
+  
+  if (user == "" || senhaDigitada == "") {
+    mensagem.innerHTML = "Preencha todos os campos!";
+    mensagem.style.color = "red";
+    return;
+  }
 
-        var emailVar = email_input.value;
-        var senhaVar = senha_input.value;
+  if (!user.includes("@") || !user.includes(".")) {
+    mensagem.innerHTML = "Digite um e-mail válido!";
+    mensagem.style.color = "red";
+    return;
+  }
 
-        if (emailVar == "" || senhaVar == "") {
-            cardErro.style.display = "block"
-            mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
-            finalizarAguardar();
-            return false;
-        }
-        else {
-            setInterval(sumirMensagem, 5000)
-        }
-
-        console.log("FORM LOGIN: ", emailVar);
-        console.log("FORM SENHA: ", senhaVar);
-
-        fetch("/usuarios/autenticar", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                emailServer: emailVar,
-                senhaServer: senhaVar
-            })
-        }).then(function (resposta) {
-            console.log("ESTOU NO THEN DO entrar()!")
-
-            if (resposta.ok) {
-                console.log(resposta);
-
-                resposta.json().then(json => {
-                    console.log(json);
-                    console.log(JSON.stringify(json));
-                    sessionStorage.EMAIL_USUARIO = json.email;
-                    sessionStorage.NOME_USUARIO = json.nome;
-                    sessionStorage.ID_USUARIO = json.id;
-                    sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
-
-                    setTimeout(function () {
-                        window.location = "./dashboard/cards.html";
-                    }, 1000); // apenas para exibir o loading
-
-                });
-
-            } else {
-
-                console.log("Houve um erro ao tentar realizar o login!");
-
-                resposta.text().then(texto => {
-                    console.error(texto);
-                    finalizarAguardar(texto);
-                });
-            }
-
-        }).catch(function (erro) {
-            console.log(erro);
-        })
-
-        return false;
+  
+  fetch("/usuarios/autenticar", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      emailServer: user,
+      senhaServer: senhaDigitada
+    })
+  })
+  .then(res => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      throw new Error("Login inválido");
     }
+  })
+  .then(data => {
 
-    function sumirMensagem() {
-        cardErro.style.display = "none"
-    }
+    
+    sessionStorage.EMAIL_USUARIO = data.email;
+    sessionStorage.NOME_USUARIO = data.nome;
+    sessionStorage.ID_USUARIO = data.id;
 
+    mensagem.innerHTML = "Login realizado com sucesso!";
+    mensagem.style.color = "green";
+
+    
+    setTimeout(() => {
+      window.location = "dashboard/dashboard.html";
+    }, 1000);
+
+  })
+  .catch(err => {
+    mensagem.innerHTML = "Usuário ou senha inválidos!";
+    mensagem.style.color = "red";
+  });
+}
 </script>
