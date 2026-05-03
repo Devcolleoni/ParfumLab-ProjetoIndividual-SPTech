@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Perfumes - Parfum Lab</title>
-  <link rel="stylesheet" href="centro.css">
+  <link rel="stylesheet" href="../css/centro.css">
   <link rel="icon" href="../imgs/sauvage-icon.png">
 
 </head>
+
 <body>
 
   <div class="sidebar">
@@ -16,7 +18,7 @@
     </div>
 
     <div class="saudacao">
-      Olá, <strong>Gustavo</strong>!
+     Olá, <strong id="nomeUsuario"></strong>!
     </div>
 
     <div class="menu">
@@ -36,7 +38,7 @@
     <p class="descricao">Escolha apenas um perfume como seu favorito:</p>
 
     <div class="grid-perfumes" id="gridPerfumes">
-      
+
       <div class="card-perfume" data-id="1">
         <img src="../imgs/sauvage-icon.png" alt="Sauvage">
         <h3>Sauvage</h3>
@@ -67,79 +69,128 @@
 
     </div>
 
-  
+
     <div class="enviar-container">
       <button id="btnEnviar" class="btn-enviar" disabled>
         Enviar Favorito
       </button>
     </div>
 
-  
+
     <div class="resumo-box" id="resumoBox" style="display: none;">
       <h3> Otima Escolha </h3>
       <div class="resumo-info">
         <p><strong>ID:</strong> <span id="resumoId"></span></p>
-        <p><strong>Nome:</strong> <span id="resumoNome">Gustavo</span></p>
+        <p><strong>Nome:</strong> <span id="resumoNome"></span></p>
         <p><strong>Perfume Preferido:</strong> <span id="resumoPerfume"></span></p>
       </div>
       <p class="mensagem-sucesso">Obrigado pela sua avaliação! </p>
     </div>
   </div>
 </body>
+
 </html>
 <script>
-    const cards = document.querySelectorAll('.card-perfume');
-    const btnEnviar = document.getElementById('btnEnviar');
-    const resumoBox = document.getElementById('resumoBox');
-    let selecionado = null;
+
+
+if (!sessionStorage.ID_USUARIO) {
+  window.location.href = "../login.html";
+}
+
+
+const nomeUsuario = sessionStorage.NOME_USUARIO || "Usuário";
+const idUsuario = sessionStorage.ID_USUARIO;
+
+
+document.getElementById("nomeUsuario").innerHTML = nomeUsuario;
+
+
+
+const cards = document.querySelectorAll('.card-perfume');
+const btnEnviar = document.getElementById('btnEnviar');
+const resumoBox = document.getElementById('resumoBox');
+
+let selecionado = null;
+
+cards.forEach(card => {
+  const btn = card.querySelector('.btn-escolher');
+
+  btn.addEventListener('click', () => {
+
+    if (selecionado && selecionado !== card) {
+      selecionado.classList.remove('selecionado');
+      selecionado.querySelector('.btn-escolher').textContent = 'Escolher como Favorito';
+    }
+
+  
+    if (selecionado === card) {
+      card.classList.remove('selecionado');
+      btn.textContent = 'Escolher como Favorito';
+      selecionado = null;
+      btnEnviar.disabled = true;
+      return;
+    }
 
    
-    cards.forEach(card => {
-      const btn = card.querySelector('.btn-escolher');
+    card.classList.add('selecionado');
+    btn.textContent = 'Favorito Selecionado';
+    selecionado = card;
 
-      btn.addEventListener('click', () => {
-        const perfumeId = card.dataset.id;
-        const perfumeNome = card.querySelector('h3').textContent;
+    btnEnviar.disabled = false;
+  });
+});
 
-        
-        if (selecionado && selecionado !== card) {
-          selecionado.classList.remove('selecionado');
-          selecionado.querySelector('.btn-escolher').textContent = 'Escolher como Favorito';
-        }
 
-      
-        if (selecionado === card) {
-          card.classList.remove('selecionado');
-          btn.textContent = 'Escolher como Favorito';
-          selecionado = null;
-          btnEnviar.disabled = true;
-          return;
-        }
 
-     
-        card.classList.add('selecionado');
-        btn.textContent = 'Favorito Selecionado';
-        selecionado = card;
+btnEnviar.addEventListener('click', () => {
 
-        btnEnviar.disabled = false;
-      });
-    });
+  if (!selecionado) return;
 
-    btnEnviar.addEventListener('click', () => {
-      if (!selecionado) return;
+  const perfumeId = Number(selecionado.dataset.id);
+  const perfumeNome = selecionado.querySelector('h3').textContent;
 
-      const perfumeId = selecionado.dataset.id;
-      const perfumeNome = selecionado.querySelector('h3').textContent;
+  btnEnviar.textContent = "Enviando...";
+
+  fetch("/usuarios/favorito", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      idUsuario: idUsuario,
+      idPerfume: perfumeId
+    })
+  })
+  .then(res => {
+    if (res.ok) {
 
       
       document.getElementById('resumoId').textContent = perfumeId;
       document.getElementById('resumoPerfume').textContent = perfumeNome;
+      document.getElementById('resumoNome').textContent = nomeUsuario;
+
       resumoBox.style.display = 'block';
-    
+
       btnEnviar.disabled = true;
-      btnEnviar.textContent = "Enviado ";
-    });
-    function sair() {
-      window.location.href = "../login.html";
+      btnEnviar.textContent = "Enviado";
+
+    } else {
+      throw new Error("Erro ao salvar favorito");
     }
-  </script>
+  })
+  .catch(err => {
+    console.log(err);
+    alert("Erro ao salvar favorito!");
+    btnEnviar.textContent = "Tentar novamente";
+  });
+
+});
+
+
+
+function sair() {
+  sessionStorage.clear();
+  window.location.href = "../login.html";
+}
+
+</script>

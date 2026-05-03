@@ -36,23 +36,15 @@
 <script>
 function logar() {
 
-  let user = email.value;
-  let senhaDigitada = senha.value;
+  let user = document.getElementById("email").value;
+  let senhaDigitada = document.getElementById("senha").value;
 
-  
   if (user == "" || senhaDigitada == "") {
     mensagem.innerHTML = "Preencha todos os campos!";
     mensagem.style.color = "red";
     return;
   }
 
-  if (!user.includes("@") || !user.includes(".")) {
-    mensagem.innerHTML = "Digite um e-mail válido!";
-    mensagem.style.color = "red";
-    return;
-  }
-
-  
   fetch("/usuarios/autenticar", {
     method: "POST",
     headers: {
@@ -64,25 +56,20 @@ function logar() {
     })
   })
   .then(res => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      throw new Error("Login inválido");
-    }
+    if (res.ok) return res.json();
+    else throw new Error("Login inválido");
   })
   .then(data => {
 
-    
-    sessionStorage.EMAIL_USUARIO = data.email;
-    sessionStorage.NOME_USUARIO = data.nome;
     sessionStorage.ID_USUARIO = data.id;
+    sessionStorage.NOME_USUARIO = data.nome;
+    sessionStorage.EMAIL_USUARIO = data.email;
 
     mensagem.innerHTML = "Login realizado com sucesso!";
     mensagem.style.color = "green";
 
-    
     setTimeout(() => {
-      window.location = "dashboard/dashboard.html";
+      window.location = "dashboard/perfumes..html";
     }, 1000);
 
   })

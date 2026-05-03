@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ver Avaliações</title>
+  <link rel="stylesheet" href="../css/centro.css">
+  <a href=""></a>
+
+</head>
+
+<body>
+
+  <div class="sidebar">
+    <div class="logo-container">
+      <div class="logotipo">PARFUM LAB</div>
+      <div class="logo-subtitulo">Avaliações</div>
+    </div>
+
+    <div class="saudacao">
+        Olá, <strong id="nomeUsuario"></strong>!
+    </div>
+
+    <div class="menu">
+      <a href="perfumes..html">Perfumes</a>
+      <a href="avaliarPerfumes.html">Avaliar Fragrância</a>
+      <a href="verAvaliacao.html" class="ativo">Ver Avaliações</a>
+      <a href="dashboard.html">Dashboard</a>
+    </div>
+
+    <button onclick="sair()" class="sair">Sair</button>
+  </div>
+
+
+  <div class="conteudo-central">
+    <h1>Todas as Avaliações</h1>
+    <p class="descricao">Veja o que os usuários acharam dos perfumes</p>
+
+
+    <div class="filtro">
+      <button class="filtro-btn ativo" onclick="filtrarTodas()">Todas</button>
+      <button class="filtro-btn" onclick="filtrarPorPerfume('Sauvage')">Sauvage</button>
+      <button class="filtro-btn" onclick="filtrarPorPerfume('Yves Saint Laurent')">YSL</button>
+      <button class="filtro-btn" onclick="filtrarPorPerfume('Egeo')">Egeo</button>
+      <button class="filtro-btn" onclick="filtrarPorPerfume('Jean')">JeanPaulGautlier Lover</button>
+    </div>
+
+    <div class="lista-avaliacoes" id="listaAvaliacoes">
+    </div>
+  </div>
+</body>
+</html>
+<script>
+
+
+if (!sessionStorage.ID_USUARIO) {
+  window.location.href = "../login.html";
+}
+
+const nomeUsuario = sessionStorage.NOME_USUARIO || "Usuário";
+document.getElementById("nomeUsuario").innerHTML = nomeUsuario;
+
+
+
+let avaliacoes = [];
+
+
+
+function criarEstrelas(nota) {
+  let estrelas = '';
+  for (let i = 1; i <= 5; i++) {
+    if (i <= nota) {
+      estrelas += `<span style="color: #f5e8d3;">★</span>`;
+    } else {
+      estrelas += `<span style="color: #555;">★</span>`;
+    }
+  }
+  return estrelas;
+}
+
+
+function renderizarAvaliacoes(lista) {
+
+  const container = document.getElementById('listaAvaliacoes');
+  container.innerHTML = '';
+
+  lista.forEach(av => {
+
+    const card = document.createElement('div');
+    card.className = 'card-avaliacao';
+
+    card.innerHTML = `
+      <div class="header-avaliacao">
+        <h3>${av.perfume}</h3>
+        <div class="estrelas">${criarEstrelas(av.nota)}</div>
+      </div>
+
+      <p class="comentario">"${av.comentario}"</p>
+
+      <div class="footer-avaliacao">
+        <span>Por: <strong>${av.usuario}</strong></span>
+        <span>${av.data}</span>
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+
+
+function filtrarTodas() {
+  renderizarAvaliacoes(avaliacoes);
+}
+
+function filtrarPorPerfume(nome) {
+  const filtradas = avaliacoes.filter(av => av.perfume.includes(nome));
+  renderizarAvaliacoes(filtradas);
+}
+
+
+
+function carregarAvaliacoes() {
+
+  fetch("/avaliacoes/listar")
+    .then(res => {
+      if (res.ok) return res.json();
+      throw new Error("Erro ao buscar");
+    })
+    .then(dados => {
+      avaliacoes = dados;
+      renderizarAvaliacoes(avaliacoes);
+    })
+    .catch(err => {
+      console.log(err);
+      alert("Erro ao carregar avaliações");
+    });
+}
+
+
+
+window.onload = carregarAvaliacoes;
+
+
+
+function sair() {
+  sessionStorage.clear();
+  window.location.href = "../login.html";
+}
+
+</script>

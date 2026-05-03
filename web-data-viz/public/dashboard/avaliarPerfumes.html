@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Avaliar Fragrâncias - Parfum Lab</title>
-    <link rel="stylesheet" href="centro.css">
+    <link rel="stylesheet" href="../css/centro.css">
 </head>
 
 <body>
@@ -16,17 +16,15 @@
         </div>
 
         <div class="saudacao">
-            Olá, <strong>Gustavo</strong>!
+        Olá, <strong id="nomeUsuario"></strong>!
         </div>
 
         <div class="menu">
-            <a href="perfumes..html">Perfumes</a>
+            <a href="../dashboard/perfumes..html">Perfumes</a>
             <a href="avaliarPerfumes.html" class="ativo">Avaliar Fragrância</a>
             <a href="verAvaliacao.html">Ver Avaliações</a>
             <a href="dashboard.html">Dashboard</a>
         </div>
-
-        <button onclick="sair()" class="sair">Sair</button>
     </div>
 
 
@@ -84,10 +82,30 @@
 
 <script>
 
+
+if (!sessionStorage.ID_USUARIO) {
+  window.location.href = "../login.html";
+}
+
+
+const idUsuario = sessionStorage.ID_USUARIO;
+const nomeUsuario = sessionStorage.NOME_USUARIO || "Usuário";
+
+
+document.getElementById("nomeUsuario").innerHTML = nomeUsuario;
+
+
+
 let nota = 0;
+let idPerfumeSelecionado = null;
+
+
 
 document.querySelectorAll('.card-avaliar').forEach(card => {
   card.onclick = function () {
+
+    idPerfumeSelecionado = Number(card.dataset.id);
+
     document.querySelector('#formAvaliacao').style.display = 'block';
     document.querySelector('#nomePerfume').textContent = card.dataset.nome;
 
@@ -95,6 +113,7 @@ document.querySelectorAll('.card-avaliar').forEach(card => {
     atualizar();
   };
 });
+
 
 
 function atualizar() {
@@ -112,11 +131,11 @@ function atualizar() {
   document.querySelector('#nota').textContent = nota;
 }
 
-
 function clicar(valor) {
   nota = valor;
   atualizar();
 }
+
 
 
 document.querySelector('#btnCancelar').onclick = function () {
@@ -125,17 +144,58 @@ document.querySelector('#btnCancelar').onclick = function () {
 
 
 document.querySelector('#btnEnviar').onclick = function () {
+
+  const comentario = document.getElementById("comentario").value;
+
   if (nota === 0) {
     alert("Escolha uma nota!");
     return;
   }
 
-  alert("Avaliação enviada!");
-  document.querySelector('#formAvaliacao').style.display = 'none';
+  if (!idPerfumeSelecionado) {
+    alert("Selecione um perfume!");
+    return;
+  }
+
+  fetch("/avaliacoes/cadastrar", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      fkUsuario: idUsuario,
+      fkPerfume: idPerfumeSelecionado,
+      qtdEstrela: nota,
+      descricao: comentario
+    })
+  })
+  .then(res => {
+    if (res.ok) {
+
+      alert("Avaliação enviada com sucesso!");
+
+      document.querySelector('#formAvaliacao').style.display = 'none';
+
+      
+      nota = 0;
+      document.getElementById("comentario").value = "";
+
+    } else {
+      throw new Error("Erro ao enviar avaliação");
+    }
+  })
+  .catch(err => {
+    console.log(err);
+    alert("Erro ao salvar avaliação!");
+  });
+
 };
 
+
+
 function sair() {
-  
+  sessionStorage.clear();
   window.location.href = "../login.html";
 }
+
 </script>
