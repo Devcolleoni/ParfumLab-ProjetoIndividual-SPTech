@@ -123,3 +123,37 @@
     font-size: 20px;
 }
 
+.metricas {
+    display: flex;
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.cartao-metrica {
+    background: #382b2b74;
+    color: white;
+    padding: 25px 30px;
+    border-radius: 16px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.cartao-metrica i {
+    font-size: 42px;
+    color: #f17524;
+}
+
+.cartao-metrica a {
+    font-size: 15px;
+    color: #94a3b8;
+    margin-bottom: 4px;
+}
+
+.cartao-metrica .numero {
+    font-size: 26px;
+    font-weight: initial;
+}
+

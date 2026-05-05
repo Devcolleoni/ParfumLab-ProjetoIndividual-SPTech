@@ -7,7 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ver Avaliações</title>
   <link rel="stylesheet" href="../css/centro.css">
-  <a href=""></a>
 
 </head>
 
@@ -83,7 +82,7 @@ function criarEstrelas(nota) {
 
 function renderizarAvaliacoes(lista) {
 
-  const container = document.getElementById('listaAvaliacoes');
+  let container = document.getElementById('listaAvaliacoes');
   container.innerHTML = '';
 
   lista.forEach(av => {
