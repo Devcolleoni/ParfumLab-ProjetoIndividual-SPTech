@@ -391,6 +391,7 @@
     display: flex;
     gap: 15px;
     justify-content: center;
+    cursor: pointer;
 }
 
 #btnEnviar {
@@ -400,6 +401,7 @@
     padding: 14px 30px;
     border-radius: 50px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 #btnCancelar {
@@ -408,6 +410,7 @@
     border: 2px solid #666;
     padding: 14px 30px;
     border-radius: 50px;
+    cursor: pointer;
 }
 
 
