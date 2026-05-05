@@ -83,13 +83,8 @@
 <script>
 
 
-if (!sessionStorage.ID_USUARIO) {
-  window.location.href = "../login.html";
-}
-
-
-const idUsuario = sessionStorage.ID_USUARIO;
-const nomeUsuario = sessionStorage.NOME_USUARIO || "Usuário";
+let idUsuario = sessionStorage.ID_USUARIO;
+let nomeUsuario = sessionStorage.NOME_USUARIO || "Usuário";
 
 
 document.getElementById("nomeUsuario").innerHTML = nomeUsuario;
@@ -145,7 +140,7 @@ document.querySelector('#btnCancelar').onclick = function () {
 
 document.querySelector('#btnEnviar').onclick = function () {
 
-  const comentario = document.getElementById("comentario").value;
+  let comentario = document.getElementById("comentario").value;
 
   if (nota === 0) {
     alert("Escolha uma nota!");
