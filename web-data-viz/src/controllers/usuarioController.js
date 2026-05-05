@@ -1,11 +1,14 @@
 var usuarioModel = require("../models/usuarioModel");
 
 function autenticar(req, res) {
+    console.log('Entrou na Funcao')
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
 
-    if (email == undefined || senha == undefined) {
+    
+    if (!email || !senha) {
         res.status(400).send("Dados inválidos!");
+        
         return;
     }
 
