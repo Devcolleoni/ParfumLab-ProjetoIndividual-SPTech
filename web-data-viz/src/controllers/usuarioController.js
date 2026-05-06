@@ -14,7 +14,6 @@ function autenticar(req, res) {
 
     usuarioModel.autenticar(email, senha)
         .then(function (resultado) {
-
             if (resultado.length == 1) {
                 res.json({
                     id: resultado[0].id,
