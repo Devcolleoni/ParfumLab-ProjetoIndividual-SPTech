@@ -92,99 +92,137 @@
 </html>
 <script>
 
+if (sessionStorage.ID_USUARIO == undefined) {
 
-if (!sessionStorage.ID_USUARIO) {
   window.location.href = "../login.html";
+
 }
 
 
-const nomeUsuario = sessionStorage.NOME_USUARIO || "Usuário";
-const idUsuario = sessionStorage.ID_USUARIO;
+
+let nomeUsuario = sessionStorage.NOME_USUARIO;
+
+let idUsuario = sessionStorage.ID_USUARIO;
+
+
+
+if (nomeUsuario == undefined) {
+
+  nomeUsuario = "Usuário";
+
+}
+
 
 
 document.getElementById("nomeUsuario").innerHTML = nomeUsuario;
 
 
 
-const cards = document.querySelectorAll('.card-perfume');
-const btnEnviar = document.getElementById('btnEnviar');
-const resumoBox = document.getElementById('resumoBox');
+let cards = document.querySelectorAll(".card-perfume");
+
+let btnEnviar = document.getElementById("btnEnviar");
+
+let resumoBox = document.getElementById("resumoBox");
+
+
 
 let selecionado = null;
 
-cards.forEach(card => {
-  const btn = card.querySelector('.btn-escolher');
 
-  btn.addEventListener('click', () => {
 
-    if (selecionado && selecionado !== card) {
-      selecionado.classList.remove('selecionado');
-      selecionado.querySelector('.btn-escolher').textContent = 'Escolher como Favorito';
+for (let i = 0; i < cards.length; i++) {
+
+  let card = cards[i];
+
+  let btn = card.querySelector(".btn-escolher");
+
+
+
+  btn.onclick = function() {
+
+
+
+    if (selecionado != null && selecionado != card) {
+
+      selecionado.classList.remove("selecionado");
+      selecionado.querySelector(".btn-escolher").innerHTML = "Escolher como Favorito";
+
     }
 
-  
-    if (selecionado === card) {
-      card.classList.remove('selecionado');
-      btn.textContent = 'Escolher como Favorito';
+
+
+    if (selecionado == card) {
+      card.classList.remove("selecionado");
+      btn.innerHTML = "Escolher como Favorito";
       selecionado = null;
       btnEnviar.disabled = true;
+
       return;
     }
 
-   
-    card.classList.add('selecionado');
-    btn.textContent = 'Favorito Selecionado';
+    card.classList.add("selecionado");
+    btn.innerHTML = "Favorito Selecionado";
     selecionado = card;
-
     btnEnviar.disabled = false;
-  });
-});
+
+  };
+
+}
 
 
 
-btnEnviar.addEventListener('click', () => {
+btnEnviar.onclick = function() {
+  if (selecionado == null) {
+    return;
 
-  if (!selecionado) return;
+  }
 
-  const perfumeId = Number(selecionado.dataset.id);
-  const perfumeNome = selecionado.querySelector('h3').textContent;
 
-  btnEnviar.textContent = "Enviando...";
+
+  let perfumeId = selecionado.dataset.id;
+  let perfumeNome = selecionado.querySelector("h3").innerHTML;
+  btnEnviar.innerHTML = "Enviando...";
 
   fetch("/usuarios/favorito", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
+
     body: JSON.stringify({
       idUsuario: idUsuario,
       idPerfume: perfumeId
     })
+
   })
-  .then(res => {
-    if (res.ok) {
 
-      
-      document.getElementById('resumoId').textContent = perfumeId;
-      document.getElementById('resumoPerfume').textContent = perfumeNome;
-      document.getElementById('resumoNome').textContent = nomeUsuario;
+  .then(function(resposta) {
+    if (resposta.ok) {
 
-      resumoBox.style.display = 'block';
-
+      document.getElementById("resumoId").innerHTML = perfumeId;
+      document.getElementById("resumoPerfume").innerHTML = perfumeNome;
+      document.getElementById("resumoNome").innerHTML = nomeUsuario;
+      resumoBox.style.display = "block";
       btnEnviar.disabled = true;
-      btnEnviar.textContent = "Enviado";
-
+      btnEnviar.innerHTML = "Enviado";
     } else {
-      throw new Error("Erro ao salvar favorito");
+
+      alert("Erro ao salvar favorito!");
+
+      btnEnviar.innerHTML = "Tentar novamente";
+
     }
+
   })
-  .catch(err => {
-    console.log(err);
-    alert("Erro ao salvar favorito!");
-    btnEnviar.textContent = "Tentar novamente";
+
+  .catch(function(erro) {
+    console.log(erro);
+    alert("Erro na aplicação!");
+    btnEnviar.innerHTML = "Tentar novamente";
+
   });
 
-});
+};
 
 
 
@@ -192,5 +230,4 @@ function sair() {
   sessionStorage.clear();
   window.location.href = "../login.html";
 }
-
 </script>

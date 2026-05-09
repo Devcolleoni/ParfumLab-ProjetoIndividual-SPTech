@@ -22,9 +22,7 @@ function autenticar(req, res) {
                     nome: resultado[0].nome,
                     email: resultado[0].email
                 });
-
             } else {
-
                 res.status(403).send("Email ou senha inválidos");
 
             }
@@ -79,7 +77,6 @@ function atualizarFavorito(req, res) {
 
         return;
     }
-
 
     usuarioModel.atualizarFavorito(idUsuario, idPerfume)
 

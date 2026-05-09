@@ -2,196 +2,194 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avaliar Fragrâncias - Parfum Lab</title>
-    <link rel="stylesheet" href="../css/centro.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avaliar Fragrâncias - Parfum Lab</title>
+  <link rel="stylesheet" href="../css/centro.css">
 </head>
 
 <body>
 
-    <div class="sidebar">
-        <div class="logo-container">
-            <div class="logotipo">PARFUM LAB</div>
-        </div>
+  <div class="sidebar">
+    <div class="logo-container">
+      <div class="logotipo">PARFUM LAB</div>
+    </div>
 
-        <div class="saudacao">
-        Olá, <strong id="nomeUsuario"></strong>!
-        </div>
+    <div class="saudacao">
+      Olá, <strong id="nomeUsuario"></strong>!
+    </div>
 
-        <div class="menu">
-            <a href="../dashboard/perfumes..html">Perfumes</a>
-            <a href="avaliarPerfumes.html" class="ativo">Avaliar Fragrância</a>
-            <a href="verAvaliacao.html">Ver Avaliações</a>
-            <a href="dashboard.html">Dashboard</a>
-        </div>
-       <button onclick="sair()" class="sair">Sair</button>
+    <div class="menu">
+      <a href="../dashboard/perfumes..html">Perfumes</a>
+      <a href="avaliarPerfumes.html" class="ativo">Avaliar Fragrância</a>
+      <a href="verAvaliacao.html">Ver Avaliações</a>
+      <a href="dashboard.html">Dashboard</a>
+    </div>
+    <button onclick="sair()" class="sair">Sair</button>
+  </div>
+
+
+  <div class="conteudo-central">
+    <h1>Avaliar Fragrâncias</h1>
+    <p class="descricao">Clique em um perfume para avaliá-lo</p>
+
+    <div class="grid-perfumes-avaliar">
+
+      <div class="card-avaliar" data-id="1" data-nome="Sauvage">
+        <img src="../imgs/sauvage-icon.png" alt="Sauvage">
+        <h3>Sauvage</h3>
+        <p class="familia">Cítrico • Âmbar • Intenso</p>
+      </div>
+
+      <div class="card-avaliar" data-id="2" data-nome="Yves Saint Laurent">
+        <img src="../imgs/yvesSaaintIcon.png" alt="Yves Saint Laurent">
+        <h3>Yves Saint Laurent</h3>
+        <p class="familia">Floral • Fresco • Elegante</p>
+      </div>
+
+      <div class="card-avaliar" data-id="3" data-nome="Jean Paul Gaultier Le Male">
+        <img src="../imgs/iconeJpg.png" alt="Jean Paul Gaultier">
+        <h3>Jean Paul Gaultier Le Male</h3>
+        <p class="familia">Baunilha • Marinho • Fresco</p>
+      </div>
+
+      <div class="card-avaliar" data-id="4" data-nome="Egeo">
+        <img src="../imgs/egeoIcon.png" alt="Egeo">
+        <h3>Egeo</h3>
+        <p class="familia">Caramelo • Doce • Amadeirado</p>
+      </div>
+
     </div>
 
 
-    <div class="conteudo-central">
-        <h1>Avaliar Fragrâncias</h1>
-        <p class="descricao">Clique em um perfume para avaliá-lo</p>
+    <div class="form-avaliacao" id="formAvaliacao" style="display: none;">
+      <h2>Avaliar: <span id="nomePerfume"></span></h2>
 
-        <div class="grid-perfumes-avaliar">
+      <div class="estrelas" id="estrelas"></div>
 
-            <div class="card-avaliar" data-id="1" data-nome="Sauvage">
-                <img src="../imgs/sauvage-icon.png" alt="Sauvage">
-                <h3>Sauvage</h3>
-                <p class="familia">Cítrico • Âmbar • Intenso</p>
-            </div>
+      <p class="nota-atual">Nota: <span id="nota">0</span>/5</p>
 
-            <div class="card-avaliar" data-id="2" data-nome="Yves Saint Laurent">
-                <img src="../imgs/yvesSaaintIcon.png" alt="Yves Saint Laurent">
-                <h3>Yves Saint Laurent</h3>
-                <p class="familia">Floral • Fresco • Elegante</p>
-            </div>
+      <textarea id="comentario" placeholder="Escreva seu comentário sobre o perfume..."></textarea>
 
-            <div class="card-avaliar" data-id="3" data-nome="Jean Paul Gaultier Le Male">
-                <img src="../imgs/iconeJpg.png" alt="Jean Paul Gaultier">
-                <h3>Jean Paul Gaultier Le Male</h3>
-                <p class="familia">Baunilha • Marinho • Fresco</p>
-            </div>
-
-            <div class="card-avaliar" data-id="4" data-nome="Egeo">
-                <img src="../imgs/egeoIcon.png" alt="Egeo">
-                <h3>Egeo</h3>
-                <p class="familia">Caramelo • Doce • Amadeirado</p>
-            </div>
-
-        </div>
-
-
-        <div class="form-avaliacao" id="formAvaliacao" style="display: none;">
-            <h2>Avaliar: <span id="nomePerfume"></span></h2>
-
-            <div class="estrelas" id="estrelas"></div>
-
-            <p class="nota-atual">Nota: <span id="nota">0</span>/5</p>
-
-            <textarea id="comentario" placeholder="Escreva seu comentário sobre o perfume..."></textarea>
-
-            <div class="botoes-form">
-                <button id="btnCancelar">Cancelar</button>
-                <button id="btnEnviar">Enviar Avaliação</button>
-            </div>
-        </div>
+      <div class="botoes-form">
+        <button id="btnCancelar">Cancelar</button>
+        <button id="btnEnviar">Enviar Avaliação</button>
+      </div>
     </div>
+  </div>
 </body>
 
 </html>
 
 <script>
+  let idUsuario = sessionStorage.ID_USUARIO;
+  let nomeUsuario = sessionStorage.NOME_USUARIO;
 
-
-let idUsuario = sessionStorage.ID_USUARIO;
-let nomeUsuario = sessionStorage.NOME_USUARIO || "Usuário";
-
-
-document.getElementById("nomeUsuario").innerHTML = nomeUsuario;
-
-
-
-let nota = 0;
-let idPerfumeSelecionado = null;
-
-
-
-document.querySelectorAll('.card-avaliar').forEach(card => {
-  card.onclick = function () {
-
-    idPerfumeSelecionado = Number(card.dataset.id);
-
-    document.querySelector('#formAvaliacao').style.display = 'block';
-    document.querySelector('#nomePerfume').textContent = card.dataset.nome;
-
-    nota = 0;
-    atualizar();
-  };
-});
-
-
-
-function atualizar() {
-  let estrelas = '';
-
-  for (let i = 1; i <= 5; i++) {
-    if (i <= nota) {
-      estrelas += `<span onclick="clicar(${i})" style="color:#f5e8d3;font-size:40px;cursor:pointer">★</span>`;
-    } else {
-      estrelas += `<span onclick="clicar(${i})" style="color:#555;font-size:40px;cursor:pointer">★</span>`;
-    }
+  if (nomeUsuario == undefined) {
+    nomeUsuario = "Usuário";
   }
 
-  document.querySelector('#estrelas').innerHTML = estrelas;
-  document.querySelector('#nota').textContent = nota;
-}
-
-function clicar(valor) {
-  nota = valor;
-  atualizar();
-}
-
-
-
-document.querySelector('#btnCancelar').onclick = function () {
-  document.querySelector('#formAvaliacao').style.display = 'none';
-};
-
-
-document.querySelector('#btnEnviar').onclick = function () {
-
-  let comentario = document.getElementById("comentario").value;
-
-  if (nota === 0) {
-    alert("Escolha uma nota!");
-    return;
-  }
-
-  if (!idPerfumeSelecionado) {
-    alert("Selecione um perfume!");
-    return;
-  }
-
-  fetch("/avaliacoes/cadastrar", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      fkUsuario: idUsuario,
-      fkPerfume: idPerfumeSelecionado,
-      qtdEstrela: nota,
-      descricao: comentario
-    })
-  })
-  .then(res => {
-    if (res.ok) {
-
-      alert("Avaliação enviada com sucesso!");
-
-      document.querySelector('#formAvaliacao').style.display = 'none';
-
-      
+  document.getElementById("nomeUsuario").innerHTML = nomeUsuario;
+  let nota = 0;
+  let idPerfumeSelecionado = null;
+  let cards = document.querySelectorAll(".card-avaliar");
+  for (let i = 0; i < cards.length; i++) {
+    cards[i].onclick = function () {
+      idPerfumeSelecionado = cards[i].dataset.id;
+      document.getElementById("formAvaliacao").style.display = "block";
+      document.getElementById("nomePerfume").innerHTML =
+        cards[i].dataset.nome;
       nota = 0;
-      document.getElementById("comentario").value = "";
+      atualizar();
 
-    } else {
-      throw new Error("Erro ao enviar avaliação");
+    };
+
+  }
+
+
+
+  function atualizar() {
+    let estrelas = "";
+    for (let i = 1; i <= 5; i++) {
+      if (i <= nota) {
+        estrelas += ` <span onclick="clicar(${i})" style="color:#f5e8d3;font-size:40px;cursor:pointer">★</span>`;
+
+      } else {
+        estrelas += `<span onclick="clicar(${i})"style="color:#555;font-size:40px;cursor:pointer"> ★</span> `;
+      }
     }
-  })
-  .catch(err => {
-    console.log(err);
-    alert("Erro ao salvar avaliação!");
-  });
-
-};
 
 
+    document.getElementById("estrelas").innerHTML = estrelas;
+    document.getElementById("nota").innerHTML = nota;
 
-function sair() {
-  sessionStorage.clear();
-  window.location.href = "../login.html";
-}
+  }
+  function clicar(valor) {
+    nota = valor;
+    atualizar();
+  }
+  document.getElementById("btnCancelar").onclick = function () {
+    document.getElementById("formAvaliacao").style.display = "none";
+  };
+
+
+
+  document.getElementById("btnEnviar").onclick = function () {
+    let comentario = document.getElementById("comentario").value;
+    if (nota == 0) {
+      alert("Escolha uma nota!");
+      return;
+    }
+
+
+
+    if (idPerfumeSelecionado == null) {
+      alert("Selecione um perfume!");
+      return;
+    }
+
+
+
+    fetch("/avaliacoes/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        fkUsuario: idUsuario,
+        fkPerfume: idPerfumeSelecionado,
+        qtdEstrela: nota,
+        descricao: comentario
+
+      })
+
+    })
+
+      .then(function (resposta) {
+        if (resposta.ok) {
+          alert("Avaliação enviada com sucesso!");
+          document.getElementById("formAvaliacao").style.display = "none";
+          nota = 0;
+          document.getElementById("comentario").value = "";
+
+        } else {
+          alert("Erro ao enviar avaliação!");
+        }
+
+      }).catch(function (erro) {
+        console.log(erro);
+        alert("Erro na aplicação!");
+
+      });
+
+  };
+
+
+
+  function sair() {
+    sessionStorage.clear();
+    window.location.href = "../login.html";
+
+  }
 
 </script>
