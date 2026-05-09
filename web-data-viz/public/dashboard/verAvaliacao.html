@@ -19,7 +19,7 @@
     </div>
 
     <div class="saudacao">
-        Olá, <strong id="nomeUsuario"></strong>!
+      Olá, <strong id="nomeUsuario"></strong>!
     </div>
 
     <div class="menu">
@@ -50,103 +50,141 @@
     </div>
   </div>
 </body>
+
 </html>
 <script>
 
+  if (sessionStorage.ID_USUARIO == undefined) {
+    window.location.href = "../login.html";
+  }
 
-if (!sessionStorage.ID_USUARIO) {
-  window.location.href = "../login.html";
-}
+  let nomeUsuario = sessionStorage.NOME_USUARIO;
 
-const nomeUsuario = sessionStorage.NOME_USUARIO || "Usuário";
-document.getElementById("nomeUsuario").innerHTML = nomeUsuario;
+  if (nomeUsuario == undefined) {
+    nomeUsuario = "Usuário";
+  }
 
+  document.getElementById("nomeUsuario").innerHTML = nomeUsuario;
 
-
-let avaliacoes = [];
-
+  let avaliacoes = [];
 
 
-function criarEstrelas(nota) {
-  let estrelas = '';
-  for (let i = 1; i <= 5; i++) {
-    if (i <= nota) {
-      estrelas += `<span style="color: #f5e8d3;">★</span>`;
-    } else {
-      estrelas += `<span style="color: #555;">★</span>`;
+
+  function criarEstrelas(nota) {
+
+    let estrelas = "";
+
+    for (let i = 1; i <= 5; i++) {
+
+      if (i <= nota) {
+        estrelas += "★";
+      } else {
+        estrelas += "☆";
+      }
+    }
+
+    return estrelas;
+  }
+
+
+
+  function renderizarAvaliacoes(lista) {
+
+    let container = document.getElementById("listaAvaliacoes");
+
+    container.innerHTML = "";
+
+    for (let i = 0; i < lista.length; i++) {
+
+      container.innerHTML += `
+      <div class="card-avaliacao">
+        <div class="header-avaliacao">
+          <h3>${lista[i].perfume}</h3>
+          <div class="estrelas">
+            ${criarEstrelas(lista[i].nota)}
+          </div>
+        </div>
+        <p class="comentario">
+          "${lista[i].comentario}"
+        </p>
+        <div class="footer-avaliacao">
+          <span>
+            Por: <strong>${lista[i].usuario}</strong>
+          </span>
+          <span>
+            ${lista[i].data}
+          </span>
+        </div>
+      </div>`;
     }
   }
-  return estrelas;
-}
-
-
-function renderizarAvaliacoes(lista) {
-
-  let container = document.getElementById('listaAvaliacoes');
-  container.innerHTML = '';
-
-  lista.forEach(av => {
-
-    const card = document.createElement('div');
-    card.className = 'card-avaliacao';
-
-    card.innerHTML = `
-      <div class="header-avaliacao">
-        <h3>${av.perfume}</h3>
-        <div class="estrelas">${criarEstrelas(av.nota)}</div>
-      </div>
-
-      <p class="comentario">"${av.comentario}"</p>
-
-      <div class="footer-avaliacao">
-        <span>Por: <strong>${av.usuario}</strong></span>
-        <span>${av.data}</span>
-      </div>
-    `;
-
-    container.appendChild(card);
-  });
-}
 
 
 
-function filtrarTodas() {
-  renderizarAvaliacoes(avaliacoes);
-}
+  function filtrarTodas() {
 
-function filtrarPorPerfume(nome) {
-  const filtradas = avaliacoes.filter(av => av.perfume.includes(nome));
-  renderizarAvaliacoes(filtradas);
-}
+    renderizarAvaliacoes(avaliacoes);
+
+  }
 
 
 
-function carregarAvaliacoes() {
+  function filtrarPorPerfume(nome) {
 
-  fetch("/avaliacoes/listar")
-    .then(res => {
-      if (res.ok) return res.json();
-      throw new Error("Erro ao buscar");
-    })
-    .then(dados => {
-      avaliacoes = dados;
-      renderizarAvaliacoes(avaliacoes);
-    })
-    .catch(err => {
-      console.log(err);
-      alert("Erro ao carregar avaliações");
-    });
-}
+    let filtradas = [];
 
+    for (let i = 0; i < avaliacoes.length; i++) {
 
+      if (avaliacoes[i].perfume.indexOf(nome) != -1) {
 
-window.onload = carregarAvaliacoes;
+        filtradas.push(avaliacoes[i]);
+
+      }
+    }
+
+    renderizarAvaliacoes(filtradas);
+  }
 
 
 
-function sair() {
-  sessionStorage.clear();
-  window.location.href = "../login.html";
-}
+  function carregarAvaliacoes() {
+
+    fetch("/avaliacoes/listar")
+
+      .then(function (resposta) {
+        if (resposta.ok) {
+          return resposta.json();
+        } else {
+          alert("Erro ao buscar avaliações");
+        }
+
+      })
+      .then(function (dados) {
+        avaliacoes = dados;
+        renderizarAvaliacoes(avaliacoes);
+
+      })
+
+      .catch(function () {
+
+        alert("Erro na aplicação");
+
+      });
+
+  }
+
+
+
+  window.onload = carregarAvaliacoes;
+
+
+
+  function sair() {
+
+    sessionStorage.clear();
+
+    window.location.href = "../login.html";
+
+  }
 
 </script>

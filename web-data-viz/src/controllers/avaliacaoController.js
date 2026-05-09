@@ -1,5 +1,7 @@
 var avaliacaoModel = require("../models/avaliacaoModel");
 
+
+
 function cadastrar(req, res) {
 
     var fkUsuario = req.body.fkUsuario;
@@ -7,32 +9,38 @@ function cadastrar(req, res) {
     var qtdEstrela = req.body.qtdEstrela;
     var descricao = req.body.descricao;
 
+
     if (fkUsuario == undefined || fkPerfume == undefined || qtdEstrela == undefined) {
         res.status(400).send("Dados incompletos!");
         return;
-    }
+    } avaliacaoModel.cadastrar(
+        fkUsuario,
+        fkPerfume,
+        qtdEstrela,
+        descricao
+    )
 
-    avaliacaoModel.cadastrar(fkUsuario, fkPerfume, qtdEstrela, descricao)
-        .then(resultado => {
+        .then(function (resultado) {
             res.json(resultado);
         })
-        .catch(erro => {
+
+        .catch(function (erro) {
             console.log(erro);
             res.status(500).json(erro.sqlMessage);
         });
-}
 
-
-function listar(req, res) {
+} function listar(req, res) {
 
     avaliacaoModel.listar()
-        .then(resultado => {
+        .then(function (resultado) {
             res.json(resultado);
         })
-        .catch(erro => {
+
+        .catch(function (erro) {
             console.log(erro);
             res.status(500).json(erro.sqlMessage);
         });
+
 }
 
 module.exports = {

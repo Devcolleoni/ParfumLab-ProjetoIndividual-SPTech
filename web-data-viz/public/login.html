@@ -37,79 +37,66 @@
 
 </html>
 <script>
+
   function logar() {
 
-    let user = document.getElementById("email").value;
-    let senhaDigitada = document.getElementById("senha").value;
+    let email = document.getElementById("email").value;
+    let senha = document.getElementById("senha").value;
 
-    if (user == "" || senhaDigitada == "") {
+
+    if (email == "" || senha == "") {
+
       mensagem.innerHTML = "Preencha todos os campos!";
       mensagem.style.color = "red";
       return false;
     }
 
-    console.log("FORM LOGIN: ", user);
-    console.log("FORM SENHA: ", senhaDigitada);
 
     fetch("/usuarios/autenticar", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
+
       body: JSON.stringify({
-        emailServer: user,
-        senhaServer: senhaDigitada
+        emailServer: email,
+        senhaServer: senha
       })
     }).then(function (resposta) {
+        if (resposta.ok) {
+          resposta.json()
+            .then(function (dados) {
+              sessionStorage.ID_USUARIO = dados.id;
+              sessionStorage.NOME_USUARIO = dados.nome;
+              sessionStorage.EMAIL_USUARIO = dados.email;
+              mensagem.innerHTML = "Login realizado com sucesso!";
+              mensagem.style.color = "green";
+              setTimeout(function () {
+                window.location = "dashboard/perfumes..html";
+              }, 1000);
 
-      console.log("ESTOU NO THEN DO entrar()!")
+            });
 
-      if (resposta.ok) {
+        } else {
 
-        console.log(resposta);
+          mensagem.innerHTML = "Email ou senha inválidos!";
 
-        resposta.json().then(function (data) {
-
-          console.log(data);
-          console.log(JSON.stringify(data));
-
-          sessionStorage.ID_USUARIO = data.id;
-          sessionStorage.NOME_USUARIO = data.nome;
-          sessionStorage.EMAIL_USUARIO = data.email;
-
-          mensagem.innerHTML = "Login realizado com sucesso!";
-          mensagem.style.color = "green";
-
-          setTimeout(function () {
-            window.location = "dashboard/perfumes..html";
-          }, 1000);
-
-        });
-
-      } else {
-
-        console.log("Houve um erro ao tentar realizar o login!");
-
-        resposta.text().then(function (texto) {
-
-          console.error(texto);
-
-          mensagem.innerHTML = "Usuário ou senha inválidos!";
           mensagem.style.color = "red";
 
-        });
+        }
 
-      }
+      })
 
-    }).catch(function (erro) {
+      .catch(function (erro) {
+        console.log(erro);
+        mensagem.innerHTML = "Erro na aplicação!";
+        mensagem.style.color = "red";
 
-      console.log(erro);
+      });
 
-      mensagem.innerHTML = "Erro na conexão com o servidor!";
-      mensagem.style.color = "red";
 
-    });
 
     return false;
   }
+
 </script>

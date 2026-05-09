@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <title>Cadastro</title>
@@ -9,92 +10,113 @@
 
 <body>
 
-<div class="pagina-auth">
+  <div class="pagina-auth">
 
-  <div class="fundo-escuro"></div>
+    <div class="fundo-escuro"></div>
 
-  <div class="caixa-formulario">
-    <h2 class="titulo-formulario">Criar Conta</h2>
+    <div class="caixa-formulario">
+      <h2 class="titulo-formulario">Criar Conta</h2>
 
-    <form onsubmit="cadastrar(); return false;">
-      <input id="ipt_nome" class="input-formulario" type="text" placeholder="Nome">
-      <input id="ipt_email" class="input-formulario" type="email" placeholder="Email">
-      <input id="ipt_senha" class="input-formulario" type="password" placeholder="Senha">
-      <input id="ipt_confirmar" class="input-formulario" type="password" placeholder="Confirmar Senha">
-      
-      <button class="botao-formulario">Cadastrar</button>
-    </form>
+      <form onsubmit="cadastrar(); return false;">
+        <input id="ipt_nome" class="input-formulario" type="text" placeholder="Nome">
+        <input id="ipt_email" class="input-formulario" type="email" placeholder="Email">
+        <input id="ipt_senha" class="input-formulario" type="password" placeholder="Senha">
+        <input id="ipt_confirmar" class="input-formulario" type="password" placeholder="Confirmar Senha">
 
-    <p id="mensagem" class="texto-formulario"></p>
+        <button class="botao-formulario">Cadastrar</button>
+      </form>
 
-    <p class="texto-formulario">
-      Já tem conta?
-      <a class="link-formulario" href="login.html">Entrar</a>
-    </p>
+      <p id="mensagem" class="texto-formulario"></p>
+
+      <p class="texto-formulario">
+        Já tem conta?
+        <a class="link-formulario" href="login.html">Entrar</a>
+      </p>
+    </div>
+
   </div>
+</body>
 
-</div>
-
+</html>
 <script>
-function cadastrar() {
 
-  let nome = ipt_nome.value;
-  let email = ipt_email.value;
-  let senha = ipt_senha.value;
-  let confirmar = ipt_confirmar.value;
+  function cadastrar() {
 
- 
-  if (nome == "" || email == "" || senha == "" || confirmar == "") {
-    mensagem.innerHTML = "Preencha todos os campos!";
-    mensagem.style.color = "red";
-    return;
-  }
+    let nome = ipt_nome.value;
 
-  if (!email.includes("@") || !email.includes(".")) {
-    mensagem.innerHTML = "Digite um e-mail válido!";
-    mensagem.style.color = "red";
-    return;
-  }
+    let email = ipt_email.value;
 
-  if (senha != confirmar) {
-    mensagem.innerHTML = "As senhas não coincidem!";
-    mensagem.style.color = "red";
-    return;
-  }
+    let senha = ipt_senha.value;
 
-  
-  fetch("/usuarios/cadastrar", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      nomeServer: nome,
-      emailServer: email,
-      senhaServer: senha
-    }),
-  })
-  .then(function (resposta) {
+    let confirmar = ipt_confirmar.value;
 
-    if (resposta.ok) {
-      mensagem.innerHTML = "Cadastro realizado com sucesso!";
-      mensagem.style.color = "green";
 
-      setTimeout(() => {
-        window.location = "login.html";
-      }, 2000);
 
-    } else {
-      throw "Erro ao cadastrar";
+    if (nome == "" || email == "" || senha == "" || confirmar == "") {
+      mensagem.innerHTML = "Preencha todos os campos!";
+      mensagem.style.color = "red";
+      return;
     }
 
-  })
-  .catch(function () {
-    mensagem.innerHTML = "Erro ao cadastrar!";
-    mensagem.style.color = "red";
-  });
-}
-</script>
 
-</body>
-</html>
+
+    if (email.indexOf("@") == -1 ||
+      email.indexOf(".") == -1) {
+      mensagem.innerHTML = "Digite um e-mail válido!";
+      mensagem.style.color = "red";
+      return;
+    }
+
+
+
+    if (senha != confirmar) {
+      mensagem.innerHTML = "As senhas não coincidem!";
+      mensagem.style.color = "red";
+      return;
+    }
+
+
+
+    fetch("/usuarios/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        nomeServer: nome,
+        emailServer: email,
+        senhaServer: senha
+
+      })
+
+    })
+
+      .then(function (resposta) {
+        if (resposta.ok) {
+          mensagem.innerHTML = "Cadastro realizado com sucesso!";
+          mensagem.style.color = "green";
+          setTimeout(function () {
+            window.location = "login.html";
+          }, 2000);
+
+        } else {
+
+          mensagem.innerHTML = "Erro ao cadastrar!";
+
+          mensagem.style.color = "red";
+
+        }
+
+      })
+
+      .catch(function (erro) {
+
+        mensagem.innerHTML = "Erro na aplicação!";
+        mensagem.style.color = "red";
+        le.log(erro);
+
+      });
+
+  }
+
+</script>
