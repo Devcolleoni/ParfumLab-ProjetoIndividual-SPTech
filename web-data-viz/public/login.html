@@ -1,81 +1,115 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <title>Login</title>
-  
+
   <link rel="stylesheet" href="css/cadastro.css">
   <link rel="icon" href="imgs/bannerLogin.png">
 </head>
+
 <body>
 
-<div class="pagina-auth">
+  <div class="pagina-auth">
 
-  <div class="fundo-escuro"></div>
+    <div class="fundo-escuro"></div>
 
-  <div class="caixa-formulario">
-    <h2 class="titulo-formulario">Login</h2>
+    <div class="caixa-formulario">
+      <h2 class="titulo-formulario">Login</h2>
 
-    <form onsubmit="logar(); return false;">
-      <input id="email" class="input-formulario" type="text" placeholder="Email">
-      <input id="senha" class="input-formulario" type="password" placeholder="Senha">
-      <button class="botao-formulario">Entrar</button>
-    </form>
+      <form onsubmit="logar(); return false;">
+        <input id="email" class="input-formulario" type="text" placeholder="Email">
+        <input id="senha" class="input-formulario" type="password" placeholder="Senha">
+        <button class="botao-formulario">Entrar</button>
+      </form>
 
-    <p id="mensagem" class="texto-formulario"></p>
+      <p id="mensagem" class="texto-formulario"></p>
 
-    <p class="texto-formulario">
-      Não tem conta?
-      <a class="link-formulario" href="cadastro.html">Cadastre-se</a>
-    </p>
+      <p class="texto-formulario">
+        Não tem conta?
+        <a class="link-formulario" href="cadastro.html">Cadastre-se</a>
+      </p>
+    </div>
+
   </div>
-
-</div>
 </body>
+
 </html>
 <script>
-function logar() {
+  function logar() {
 
-  let user = document.getElementById("email").value;
-  let senhaDigitada = document.getElementById("senha").value;
+    let user = document.getElementById("email").value;
+    let senhaDigitada = document.getElementById("senha").value;
 
-  if (user == "" || senhaDigitada == "") {
-    mensagem.innerHTML = "Preencha todos os campos!";
-    mensagem.style.color = "red";
-    return;
+    if (user == "" || senhaDigitada == "") {
+      mensagem.innerHTML = "Preencha todos os campos!";
+      mensagem.style.color = "red";
+      return false;
+    }
+
+    console.log("FORM LOGIN: ", user);
+    console.log("FORM SENHA: ", senhaDigitada);
+
+    fetch("/usuarios/autenticar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        emailServer: user,
+        senhaServer: senhaDigitada
+      })
+    }).then(function (resposta) {
+
+      console.log("ESTOU NO THEN DO entrar()!")
+
+      if (resposta.ok) {
+
+        console.log(resposta);
+
+        resposta.json().then(function (data) {
+
+          console.log(data);
+          console.log(JSON.stringify(data));
+
+          sessionStorage.ID_USUARIO = data.id;
+          sessionStorage.NOME_USUARIO = data.nome;
+          sessionStorage.EMAIL_USUARIO = data.email;
+
+          mensagem.innerHTML = "Login realizado com sucesso!";
+          mensagem.style.color = "green";
+
+          setTimeout(function () {
+            window.location = "dashboard/perfumes..html";
+          }, 1000);
+
+        });
+
+      } else {
+
+        console.log("Houve um erro ao tentar realizar o login!");
+
+        resposta.text().then(function (texto) {
+
+          console.error(texto);
+
+          mensagem.innerHTML = "Usuário ou senha inválidos!";
+          mensagem.style.color = "red";
+
+        });
+
+      }
+
+    }).catch(function (erro) {
+
+      console.log(erro);
+
+      mensagem.innerHTML = "Erro na conexão com o servidor!";
+      mensagem.style.color = "red";
+
+    });
+
+    return false;
   }
-
-  fetch("/usuarios/autenticar", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      emailServer: user,
-      senhaServer: senhaDigitada
-    })
-  })
-  .then(res => {
-    if (res.ok) return res.json();
-    else throw new Error("Login inválido");
-  })
-  .then(data => {
-
-    sessionStorage.ID_USUARIO = data.id;
-    sessionStorage.NOME_USUARIO = data.nome;
-    sessionStorage.EMAIL_USUARIO = data.email;
-
-    mensagem.innerHTML = "Login realizado com sucesso!";
-    mensagem.style.color = "green";
-
-    setTimeout(() => {
-      window.location = "dashboard/perfumes..html";
-    }, 1000);
-
-  })
-  .catch(err => {
-    mensagem.innerHTML = "Usuário ou senha inválidos!";
-    mensagem.style.color = "red";
-  });
-}
 </script>
