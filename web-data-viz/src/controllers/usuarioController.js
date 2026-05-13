@@ -17,6 +17,9 @@ function autenticar(req, res) {
 
         .then(function (resultado) {
             if (resultado.length == 1) {
+                console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
+                console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
+
                 res.json({
                     id: resultado[0].id,
                     nome: resultado[0].nome,
@@ -55,8 +58,8 @@ function cadastrar(req, res) {
 
     usuarioModel.cadastrar(nome, email, senha)
 
-        .then(function () {
-            res.status(200).send("Cadastro realizado");
+        .then(function (resultado) {
+            res.json(resultado);
         })
 
         .catch(function (erro) {
