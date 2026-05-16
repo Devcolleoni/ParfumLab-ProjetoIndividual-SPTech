@@ -20,6 +20,7 @@ var avaliacoesRouter = require("./src/routes/avaliacoes")
 var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
 var avisosRouter = require("./src/routes/avisos");
+var dashboardRouter = require("./src/routes/dashboard");
 
 
 
@@ -36,6 +37,7 @@ app.use("/avaliacoes", avaliacoesRouter);
 app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
 app.use("/avisos", avisosRouter);
+app.use("/dashboard", dashboardRouter);
 
 
 

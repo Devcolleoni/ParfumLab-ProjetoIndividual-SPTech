@@ -16,11 +16,9 @@
       <div class="logotipo">PARFUM LAB</div>
       <div class="logo-subtitulo">Dashboard</div>
     </div>
-
     <div class="saudacao">
-       Olá, <strong id="nomeUsuario"></strong>!
+      Olá, <strong id="nomeUsuario"></strong>!
     </div>
-
     <div class="menu">
       <a href="perfumes..html">Perfumes</a>
       <a href="avaliarPerfumes.html">Avaliar Fragrância</a>
@@ -30,136 +28,336 @@
 
     <button onclick="sair()" class="sair">Sair</button>
   </div>
-
-
   <div class="conteudo-central">
     <h1>Dashboard</h1>
-    <p class="descricao">Visão geral das avaliações dos perfumes</p>
-
-
-        <div class="metricas">
-            <div class="cartao-metrica">
-                <div>
-                    <a>Perfume mais avaliado</a>
-                    <p class="numero">Sauvage</p>
-                </div>
-            </div>
-            <div class="cartao-metrica">
-                <div>
-                    <a>Perfume menos avaliado</a>
-                    <p class="numero">Egeo </p>
-                </div>
-            </div>
-            <div class="cartao-metrica">
-                <div>
-                    <a>Total de avaliacoes</a>
-                    <p class="numero">100</p>
-                </div>
-            </div>
+    <p class="descricao">
+      Visão geral das avaliações dos perfumes
+    </p>
+    <div class="metricas">
+      <div class="cartao-metrica">
+        <div>
+          <a>Perfume mais avaliado</a>
+          <p class="numero" id="maisAvaliado"></p>
         </div>
-
+      </div>
+      <div class="cartao-metrica">
+        <div>
+          <a>Perfume menos avaliado</a>
+          <p class="numero" id="menosAvaliado"></p>
+        </div>
+      </div>
+      <div class="cartao-metrica">
+        <div>
+          <a>Total de avaliações</a>
+          <p class="numero" id="totalAvaliacoes"></p>
+        </div>
+      </div>
+    </div>
     <div class="graficos-container">
-
       <div class="grafico-box">
         <h3>Nota Média por Perfume</h3>
         <canvas id="chartNotasPerfumes"></canvas>
       </div>
-
-
       <div class="grafico-box">
         <h3>Quantidade de Avaliações por Perfume</h3>
         <canvas id="chartQuantidade"></canvas>
       </div>
 
     </div>
+
   </div>
+
 </body>
+
 </html>
-  <script>
+
+<script>
+
+  
+
+  window.onload = function() {
+
+    document.getElementById("nomeUsuario").innerHTML = sessionStorage.NOME_USUARIO;
+
+    buscarMetricas();
+    buscarNotas();
+    buscarQuantidade();
+  }
+
+
+  function buscarMetricas() {
+
+    fetch("/dashboard/metricas")
+      .then(function (resposta) {
+
+        if (resposta.ok) {
+
+          resposta.json().then(function (dados) {
+
+            console.log("Métricas:", dados);
+
+            document.getElementById("maisAvaliado").innerHTML =
+              dados[0].maisAvaliado;
+
+            document.getElementById("menosAvaliado").innerHTML =
+              dados[0].menosAvaliado;
+
+            document.getElementById("totalAvaliacoes").innerHTML =
+              dados[0].totalAvaliacoes;
+
+          });
+
+        } else {
+
+          console.log("Erro ao buscar métricas");
+
+        }
+
+      })
+      .catch(function (erro) {
+
+        console.log(erro);
+
+      });
+
+  }
+
+  function buscarNotas() {
+
+    fetch("/dashboard/notas")
+      .then(function (resposta) {
+
+        if (resposta.ok) {
+
+          resposta.json().then(function (dados) {
+
+            console.log("Notas:", dados);
+
+            let labels = [];
+            let medias = [];
+
+            for (let i = 0; i < dados.length; i++) {
+
+              labels.push(dados[i].nome);
+              medias.push(dados[i].media);
+
+            }
+
+            criarGraficoNotas(labels, medias);
+
+          });
+
+        } else {
+
+          console.log("Erro ao buscar notas");
+
+        }
+
+      })
+      .catch(function (erro) {
+
+        console.log(erro);
+
+      });
+
+  }
+
+  function buscarQuantidade() {
+
+    fetch("/dashboard/quantidade")
+      .then(function (resposta) {
+
+        if (resposta.ok) {
+
+          resposta.json().then(function (dados) {
+
+            console.log("Quantidade:", dados);
+
+            let labels = [];
+            let quantidades = [];
+
+            for (let i = 0; i < dados.length; i++) {
+
+              labels.push(dados[i].nome);
+              quantidades.push(dados[i].quantidade);
+
+            }
+
+            criarGraficoQuantidade(labels, quantidades);
+
+          });
+
+        } else {
+
+          console.log("Erro ao buscar quantidade");
+
+        }
+
+      })
+      .catch(function (erro) {
+
+        console.log(erro);
+
+      });
+
+  }
+
+  function criarGraficoNotas(labels, medias) {
+
     new Chart(document.getElementById('chartNotasPerfumes'), {
+
       type: 'doughnut',
+
       data: {
-        labels: [
-          'Sauvage',
-          'Yves Saint Laurent',
-          'Jean Paul Gaultier Le Male',
-          'Egeo'
-        ],
+
+        labels: labels,
+
         datasets: [{
-          data: [4.8, 4.5, 4.7, 3.9],
+
+          data: medias,
+
           backgroundColor: [
             '#f5e8d3',
             '#d4b88a',
             '#a67b5b',
             '#75523f'
           ],
+
           borderColor: '#0a0a0a',
           borderWidth: 4
+
         }]
       },
+
       options: {
+
         responsive: true,
+
         maintainAspectRatio: false,
+
         plugins: {
+
           legend: {
+
             position: 'bottom',
+
             labels: {
+
               color: '#ddd',
-              font: { size: 14 },
+
+              font: {
+                size: 14
+              },
+
               padding: 20
+
             }
+
           },
+
           tooltip: {
+
             callbacks: {
+
               label: function (context) {
-                return context.label + ':' + context.raw + '★';
+
+                return context.label + ': ' + context.raw + '★';
+
               }
+
             }
+
           }
+
         }
+
       }
+
     });
 
+  }
+
+  function criarGraficoQuantidade(labels, quantidades) {
 
     new Chart(document.getElementById('chartQuantidade'), {
+
       type: 'bar',
+
       data: {
-        labels: [
-          'Sauvage',
-          'Yves Saint Laurent',
-          'Jean Paul Gaultier Le Male',
-          'Egeo'
-        ],
+
+        labels: labels,
+
         datasets: [{
+
           label: 'Número de Avaliações',
-          data: [89, 67, 52, 40],
+
+          data: quantidades,
+
           backgroundColor: '#a67b5b',
+
           borderColor: '#f5e8d3',
+
           borderWidth: 1
+
         }]
       },
+
       options: {
+
         responsive: true,
+
         maintainAspectRatio: false,
+
         scales: {
+
           y: {
+
             beginAtZero: true,
-            grid: { color: '#333' },
-            ticks: { color: '#ddd' }
+
+            grid: {
+              color: '#333'
+            },
+
+            ticks: {
+              color: '#ddd'
+            }
+
           },
+
           x: {
-            grid: { color: '#333' },
-            ticks: { color: '#ddd' }
+
+            grid: {
+              color: '#333'
+            },
+
+            ticks: {
+              color: '#ddd'
+            }
+
           }
+
         },
+
         plugins: {
-          legend: { display: false }
+
+          legend: {
+            display: false
+          }
+
         }
+
       }
+
     });
 
-    function sair() {
+  }
 
-      window.location.href = "../login.html";
-    }
-  </script>
+  function sair() {
+
+    sessionStorage.clear();
+
+    window.location.href = "../login.html";
+
+  }
+
+</script>
