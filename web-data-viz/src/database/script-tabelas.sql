@@ -1,62 +1,67 @@
--- Arquivo de apoio, caso você queira criar tabelas como as aqui criadas para a API funcionar.
--- Você precisa executar os comandos no banco de dados para criar as tabelas,
--- ter este arquivo aqui não significa que a tabela em seu BD estará como abaixo!
+CREATE DATABASE parfumLab;
+USE parfumLab;
 
-/*
-comandos para mysql server
-*/
-
-CREATE DATABASE aquatech;
-
-USE aquatech;
-
-CREATE TABLE empresa (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	razao_social VARCHAR(50),
-	cnpj CHAR(14),
-	codigo_ativacao VARCHAR(50)
+CREATE TABLE Perfume (
+id INT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(45) NOT NULL
 );
 
-CREATE TABLE usuario (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(50),
-	email VARCHAR(50),
-	senha VARCHAR(50),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
+
+CREATE TABLE Usuario (
+id INT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(50) NOT NULL,
+email VARCHAR(50) UNIQUE NOT NULL, 
+senha VARCHAR(255) NOT NULL,     
+fkPerfumeFavorito INT,            
+FOREIGN KEY (fkPerfumeFavorito) REFERENCES Perfume(id)
 );
 
-CREATE TABLE aviso (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	titulo VARCHAR(100),
-	descricao VARCHAR(150),
-	fk_usuario INT,
-	FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
+
+CREATE TABLE Avaliacao (
+id INT PRIMARY KEY AUTO_INCREMENT,
+fkUsuario INT NOT NULL,
+fkPerfume INT NOT NULL,
+qtdEstrela INT NOT NULL CHECK (qtdEstrela >= 0 AND qtdEstrela <= 5), 
+descricao VARCHAR(400),
+dataAvaliacao DATETIME DEFAULT CURRENT_TIMESTAMP, 
+FOREIGN KEY (fkUsuario) REFERENCES Usuario(id),
+FOREIGN KEY (fkPerfume) REFERENCES Perfume(id)
 );
 
-create table aquario (
-/* em nossa regra de negócio, um aquario tem apenas um sensor */
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	descricao VARCHAR(300),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
-);
 
-/* esta tabela deve estar de acordo com o que está em INSERT de sua API do arduino - dat-acqu-ino */
+INSERT INTO Perfume (nome) VALUES 
+('Sauvage Dior Eau de Parfum'),
+('Yves Saint Laurent Le Parfum'),
+('Egeo Bomb Black'),
+('Jean Paul Gaultier Le Male');
 
-create table medida (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	dht11_umidade DECIMAL,
-	dht11_temperatura DECIMAL,
-	luminosidade DECIMAL,
-	lm35_temperatura DECIMAL,
-	chave TINYINT,
-	momento DATETIME,
-	fk_aquario INT,
-	FOREIGN KEY (fk_aquario) REFERENCES aquario(id)
-);
 
-insert into empresa (razao_social, codigo_ativacao) values ('Empresa 1', 'ED145B');
-insert into empresa (razao_social, codigo_ativacao) values ('Empresa 2', 'A1B2C3');
-insert into aquario (descricao, fk_empresa) values ('Aquário de Estrela-do-mar', 1);
-insert into aquario (descricao, fk_empresa) values ('Aquário de Peixe-dourado', 2);
+INSERT INTO Usuario (nome, email, senha, fkPerfumeFavorito) VALUES 
+('Gustavo', 'gustavo@email.com', 'senha123', 1);
+
+
+INSERT INTO Avaliacao (fkUsuario, fkPerfume, qtdEstrela, descricao) VALUES 
+(1, 3, 5, 'Fragrância incrível e ótima durabilidade!');
+
+
+SELECT * FROM Perfume;
+SELECT * FROM Usuario;
+SELECT * FROM Avaliacao;
+
+
+SELECT 
+u.nome AS 'Usuário',
+p.nome AS 'Perfume Avaliado',
+a.qtdEstrela AS 'Estrelas',
+a.descricao AS 'Comentário'
+FROM Avaliacao a
+JOIN Usuario u ON a.fkUsuario = u.id
+JOIN Perfume p ON a.fkPerfume = p.id;
+
+
+SELECT * FROM Usuario;
+
+TRUNCATE TABLE Avaliacao;
+
+
+
