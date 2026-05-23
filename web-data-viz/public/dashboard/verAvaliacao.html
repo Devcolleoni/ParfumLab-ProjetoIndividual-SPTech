@@ -88,31 +88,31 @@
 
 
 
-  function renderizarAvaliacoes(lista) {
+  function renderizarAvaliacoes(avaliacoes) {
 
     let container = document.getElementById("listaAvaliacoes");
 
     container.innerHTML = "";
 
-    for (let i = 0; i < lista.length; i++) {
+    for (let i = 0; i < avaliacoes.length; i++) {
 
       container.innerHTML += `
       <div class="card-avaliacao">
         <div class="header-avaliacao">
-          <h3>${lista[i].perfume}</h3>
+          <h3>${avaliacoes[i].perfume}</h3>
           <div class="estrelas">
-            ${criarEstrelas(lista[i].nota)}
+            ${criarEstrelas(avaliacoes[i].nota)}
           </div>
         </div>
         <p class="comentario">
-          "${lista[i].comentario}"
+          "${avaliacoes[i].comentario}"
         </p>
         <div class="footer-avaliacao">
           <span>
-            Por: <strong>${lista[i].usuario}</strong>
+            Por: <strong>${avaliacoes[i].usuario}</strong>
           </span>
           <span>
-            ${lista[i].data}
+            ${avaliacoes[i].data}
           </span>
         </div>
       </div>`;

@@ -78,7 +78,6 @@
     </div>
   </div>
 </body>
-
 </html>
 
 <script>
@@ -90,18 +89,23 @@
   }
 
   document.getElementById("nomeUsuario").innerHTML = nomeUsuario;
+
   let nota = 0;
+
   let idPerfumeSelecionado = null;
+
   let cards = document.querySelectorAll(".card-avaliar");
+
   for (let i = 0; i < cards.length; i++) {
+    
     cards[i].onclick = function () {
+
       idPerfumeSelecionado = cards[i].dataset.id;
       document.getElementById("formAvaliacao").style.display = "block";
       document.getElementById("nomePerfume").innerHTML =
         cards[i].dataset.nome;
       nota = 0;
       atualizar();
-
     };
 
   }
@@ -115,7 +119,7 @@
         estrelas += ` <span onclick="clicar(${i})" style="color:#f5e8d3;font-size:40px;cursor:pointer">★</span>`;
 
       } else {
-        estrelas += `<span onclick="clicar(${i})"style="color:#555;font-size:40px;cursor:pointer"> ★</span> `;
+        estrelas += `<span onclick="clicar(${i})"style="color:#555;font-size:40px;cursor:pointer">★</span> `;
       }
     }
 
@@ -124,10 +128,12 @@
     document.getElementById("nota").innerHTML = nota;
 
   }
+
   function clicar(valor) {
     nota = valor;
     atualizar();
   }
+
   document.getElementById("btnCancelar").onclick = function () {
     document.getElementById("formAvaliacao").style.display = "none";
   };
