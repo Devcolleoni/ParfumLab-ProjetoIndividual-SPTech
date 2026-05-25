@@ -186,7 +186,7 @@ header {
 
 .item:last-child {
   margin-bottom: -100px;
-}/*aplica somente se o elemneto for o ultimo da pagina o elemento filho */
+}
 
 /*Secao numero*/
 .numero {

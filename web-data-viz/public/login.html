@@ -67,10 +67,10 @@
     }).then(function (resposta) {
         if (resposta.ok) {
           resposta.json()
-            .then(function (dados) {
-              sessionStorage.ID_USUARIO = dados.id;
-              sessionStorage.NOME_USUARIO = dados.nome;
-              sessionStorage.EMAIL_USUARIO = dados.email;
+            .then(function (json) {
+              sessionStorage.ID_USUARIO = json.id;
+              sessionStorage.NOME_USUARIO = json.nome;
+              sessionStorage.EMAIL_USUARIO = json.email;
               mensagem.innerHTML = "Login realizado com sucesso!";
               mensagem.style.color = "green";
               setTimeout(function () {
