@@ -58,6 +58,11 @@
       return;
     }
 
+    if (senha.length < 8) {
+      mensagem.innerHTML = "A senha deve ter no mínimo 8 caracteres!";
+      mensagem.style.color = "red";
+      return;
+    }
 
 
     if (email.indexOf("@") == -1 ||
