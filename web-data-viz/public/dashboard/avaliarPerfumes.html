@@ -36,7 +36,7 @@
 
     <div class="grid-perfumes-avaliar">
 
-      <div class="card-avaliar" data-id="1" data-nome="Sauvage">
+      <div  class="card-avaliar" data-id="1" data-nome="Sauvage">
         <img src="../imgs/sauvage-icon.png" alt="Sauvage">
         <h3>Sauvage</h3>
         <p class="familia">Cítrico • Âmbar • Intenso</p>
@@ -73,8 +73,8 @@
       <textarea id="comentario" placeholder="Escreva seu comentário sobre o perfume..."></textarea>
 
       <div class="botoes-form">
-        <button id="btnCancelar">Cancelar</button>
-        <button id="btnEnviar">Enviar Avaliação</button>
+        <button onclick="cancelar()" id="btnCancelar">Cancelar</button>
+        <button onclick="enviar()" id="btnEnviar">Enviar Avaliação</button>
       </div>
     </div>
   </div>
@@ -133,14 +133,15 @@
     nota = valor;
     atualizar();
   }
+  
+    function cancelar () {
+  
+      document.getElementById("formAvaliacao").style.display = "none";
+      
+    }
 
-  document.getElementById("btnCancelar").onclick = function () {
-    document.getElementById("formAvaliacao").style.display = "none";
-  };
+  function enviar() {
 
-
-
-  document.getElementById("btnEnviar").onclick = function () {
     let comentario = document.getElementById("comentario").value;
     if (nota == 0) {
       alert("Escolha uma nota!");
@@ -148,7 +149,7 @@
     }
 
 
-
+    
     if (idPerfumeSelecionado == null) {
       alert("Selecione um perfume!");
       return;
@@ -187,8 +188,9 @@
         alert("Erro na aplicação!");
 
       });
+    
+  }
 
-  };
 
 
 
